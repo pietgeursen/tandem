@@ -15,13 +15,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
-
-// setting up landing page
-
-// app.get('/', function(req, res){
-//   res.send('success')
-// })
-
  app.get('/', function (req, res) {
     res.render('main', {layout: '_layout'});
   });

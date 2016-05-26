@@ -11,6 +11,9 @@ var knex = Knex(knexConfig[env]);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static("public"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,15 +28,17 @@ app.get('/signup', function (req, res) {
 })
 
 
-app.get('/currentListings', function(req, res){
-  res.render('currentListings', { }) //handlebars-zie stuff
-  //from = searched
-  //to = searched
-  // total number of records
-  //listing details : date, to, from, driver
 
+app.get('/currentListings', function(req, res){
+
+  knex('listings').where({origin: 'Kaeo'}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+  .then(function(data){
+  res.render('currentListings', { listing: data })
+
+  })
 })
 
+<<<<<<< HEAD
 app.post('/signup', function (req, res) {
 //   // if (req.body.email === '') {
 //   //   res.redirect('/sign-up')

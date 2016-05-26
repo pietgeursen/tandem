@@ -23,22 +23,22 @@ app.get('/currentListings', function(req, res){
 
 })
 
-app.post('/sign-up', function (req, res) {
-  // if (req.body.email === '') {
-  //   res.redirect('/sign-up')
-  // }
-  var hash = bcrypt.hashSync( req.body.password)
-  knex('users').insert({ email: req.body.email, hashed_password: hash })
-  .then(function(data){
-    //create sessions
-    req.session.userId = data[0]
-    res.send("success, you've signed up")
-  })
-  .catch(function(error){
-
-    req.session.userId = 0
-    res.redirect('/')
-  })
+app.get('/signup', function (req, res) {
+  // // if (req.body.email === '') {
+  // //   res.redirect('/sign-up')
+  // // }
+  // var hash = bcrypt.hashSync( req.body.password)
+  // knex('users').insert({ email: req.body.email, hashed_password: hash })
+  // .then(function(data){
+  //   //create sessions
+  //   req.session.userId = data[0]
+    res.render('login',{})
+//   })
+//   .catch(function(error){
+//
+//     req.session.userId = 0
+//     res.redirect('/')
+//   })
 })
 
 // app.post('/login', function(req, res){

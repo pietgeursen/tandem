@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/Tandem-NZ/tandem#readme",
   "dependencies": {
+    "bcrypt-node": "^0.1.0",
+    "body-parser": "^1.15.1",
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "hbs": "^4.0.0",

@@ -25,6 +25,10 @@ app.get('/currentListings', function(req, res){
   })
 })
 
+app.get('/singleListing', function(req, res){
+  res.render('singleListing', { layout: '_layout' })
+})
+
 app.listen(3000, function () {
   console.log('catching a lift on 3000!');
 });

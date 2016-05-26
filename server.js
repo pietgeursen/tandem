@@ -3,14 +3,21 @@ var app = express()
 var bodyParser = require('body-parser')
 var path = require('path')
 var bcrypt = require('bcrypt-node')
+var knex = require('knex')
 
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function(req, res){
   res.send('success')
+})
+
+app.get('/signup', function (req, res) {
+  res.render('login')
 })
 
 
@@ -23,22 +30,22 @@ app.get('/currentListings', function(req, res){
 
 })
 
-app.get('/signup', function (req, res) {
-  // // if (req.body.email === '') {
-  // //   res.redirect('/sign-up')
-  // // }
-  // var hash = bcrypt.hashSync( req.body.password)
-  // knex('users').insert({ email: req.body.email, hashed_password: hash })
-  // .then(function(data){
-  //   //create sessions
-  //   req.session.userId = data[0]
-    res.render('login',{})
-//   })
-//   .catch(function(error){
-//
-//     req.session.userId = 0
-//     res.redirect('/')
-//   })
+app.post('/signup', function (req, res) {
+//   // if (req.body.email === '') {
+//   //   res.redirect('/sign-up')
+//   // }
+var hash = bcrypt.hashSync( req.body.password)
+ knex('users').insert({ email: req.body.email, hashed_password: hash })
+    .then(function(data){
+        //create sessions
+        // req.session.userId = data[0]
+        res.redirect('currentListings')
+    })
+    .catch(function(error){
+       console.log("error:", error)
+        // req.session.userId = 0
+        res.redirect('/')
+    })
 })
 
 // app.post('/login', function(req, res){

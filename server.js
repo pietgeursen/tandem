@@ -9,7 +9,7 @@ app.set('view engine', 'hbs');
 
 
 app.get('/', function(req, res){
-  res.send('success!')
+  res.send('success')
 })
 
 app.listen(3000, function () {

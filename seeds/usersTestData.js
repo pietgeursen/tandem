@@ -10,5 +10,8 @@ exports.seed = function(knex, Promise) {
     knex('users').insert({userID: 3, name: 'Natasha', email: 'ra@gmail.com', hashedPassword: 'ewfkjuw'})
     knex('users').insert({userID: 4, name: 'Wanda', email: 'ra@gmail.com', hashedPassword: 'ewfkjuw'})
     knex('users').insert({userID: 5, name: 'Clint', email: 'ra@gmail.com', hashedPassword: 'ewfkjuw'})
+    knex('users').insert({userID: 3, name: 'Challa', email: 'ra@gmail.com', hashedPassword: 'ewfkjuw'})
+    knex('users').insert({userID: 4, name: 'Tina', email: 'ra@gmail.com', hashedPassword: 'ewfkjuw'})
+    knex('users').insert({userID: 5, name: 'Karpov', email: 'ra@gmail.com', hashedPassword: 'ewfkjuw'})
   );
 };

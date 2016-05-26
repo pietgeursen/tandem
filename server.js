@@ -15,6 +15,7 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
 app.get('/', function(req, res){
   res.send('success')
 })
@@ -51,25 +52,18 @@ var hash = bcrypt.hashSync( req.body.password)
     })
 })
 
-// app.post('/login', function(req, res){
-//   knex('users').where('email', req.body.email)
-//     .then(function(data) {
-//       if ( req.body.email === '' ) {
-//         res.redirect('/signIn')
-//       }
-//       else if (bcrypt.compareSync( req.body.password, data[0].hashed_password )) {
-//         req.session.userId = data[0].id
-//         res.redirect('/secret')
-//       }
-//       else {
-//         res.redirect('/home') //main listings
-//       }
-//     })
-//     .catch(function(error){
-//       req.session.userId = 0
-//       res.redirect('/signUp')
-//   })
-// })
+app.post ('/login', function(req,res) {
+  knex('users').where({email: req.body.email})
+    .then (function(data){
+      var hashedLogin = data[0].hashedPassword
+      if  (bcrypt.compareSync(req.body.password, hashedLogin)) {
+        res.redirect('/currentListings')
+      }
+    })
+    .catch (function (error) {
+      console.log("error:", error)
+    })
+})
 
 app.listen(3000, function () {
   console.log('catching a lift on 3000!');

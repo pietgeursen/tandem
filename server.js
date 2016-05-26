@@ -12,6 +12,16 @@ app.get('/', function(req, res){
   res.send('success')
 })
 
+
+app.get('/currentListings', function(req, res){
+  res.render('currentListings', { }) //handlebars-zie stuff
+  //from = searched
+  //to = searched
+  // total number of records
+  //listing details : date, to, from, driver
+
+})
+
 app.listen(3000, function () {
   console.log('catching a lift on 3000!');
 });

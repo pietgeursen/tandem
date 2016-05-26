@@ -20,14 +20,16 @@ app.get('/', function(req, res){
 })
 
 
+
 app.get('/currentListings', function(req, res){
-  knex('users').select('*')
+
+  knex('listings').where({origin: 'Kaeo'}).innerJoin('users', 'listings.userID', '=', 'users.userID')
   .then(function(data){
-    console.log("data : ", data)
   res.render('currentListings', { listing: data })
 
   })
 })
+
 
 app.listen(3000, function () {
   console.log('catching a lift on 3000!');

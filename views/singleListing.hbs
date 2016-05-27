@@ -10,8 +10,10 @@
 </div>
 <br/>
 <div class="commentContainer">
-  <textarea id="commentReply" name="comment" rows="8" cols="40"></textarea>
-  <button type="button" name="reply">reply</button>
+  <form action="/singleListing" class="" method="post">
+    <textarea id="commentReply" name="comment" rows="8" cols="40"></textarea>
+    <input type="submit" name="name" value="comment">
+  </form>
 </div>
 <div class="requestToBook">
   <button type="button" name="requestToBook">Request a Ride</button>

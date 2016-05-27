@@ -75,48 +75,48 @@ app.post ('/login', function(req,res) {
 
 ///OAuth///
 
-// app.get('/auth/facebook', passport.authenticate('facebook'))
-//
-// app.get('/auth/facebook/callback',
-//   passport.authenticate('facebook', { failureRedirect: '/login' }),
-//   function (req, res) {
-//     console.log('req.user', req.user)
-//     // req.session.user = req.user
-//     res.render('index', { user: req.user })
-// })
-//
-// passport.use(new FacebookStrategy ({
-//   clientID: process.env.FACEBOOK_CLIENT_ID,
-//   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-//   callbackURL: "http://localhost:3000/auth/facebook/callback"
-// },
-//   function (accessToken, refreshToken, profile, callback) {
-//     knex('users').select('*').where({
-//       facebookID: profile.id
-//     }).then(function (resp) {
-//       if (resp.length === 0) {
-//         var user = {
-//           facebookID: profile.id,
-//           name: profile.displayName
-//         }
-// // set user in session
-//         knex('users').insert(user).then(function (resp) {
-//           callback(null, user)
-//         })
-//       } else {
-//         callback(null, resp[0])
-//       }
-//     })
-//   }
-//  ))
-//
-//
-// passport.serializeUser(function(user, callback) {
-//     callback(null, user)
-// })
-// passport.deserializeUser(function(obj, callback) {
-//     callback(null, obj)
-// })
+app.get('/auth/facebook', passport.authenticate('facebook'))
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function (req, res) {
+    console.log('req.user', req.user)
+    // req.session.user = req.user
+    res.render('currentListings')
+})
+
+passport.use(new FacebookStrategy ({
+  clientID: process.env.FACEBOOK_CLIENT_ID,
+  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/auth/facebook/callback"
+},
+  function (accessToken, refreshToken, profile, callback) {
+    knex('users').select('*').where({
+      facebookID: profile.id
+    }).then(function (resp) {
+      if (resp.length === 0) {
+        var user = {
+          facebookID: profile.id,
+          name: profile.displayName
+        }
+// set user in session
+        knex('users').insert(user).then(function (resp) {
+          callback(null, user)
+        })
+      } else {
+        callback(null, resp[0])
+      }
+    })
+  }
+ ))
+
+
+passport.serializeUser(function(user, callback) {
+    callback(null, user)
+})
+passport.deserializeUser(function(obj, callback) {
+    callback(null, obj)
+})
 
 
 /////Auth Ends ///////

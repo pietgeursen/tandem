@@ -1,9 +1,24 @@
-<link type="text/css" rel="stylesheet" href="../styles/index.css">
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Tandem</title>
+  <link type="text/css" rel="stylesheet" href="../styles/index.css">
+</head>
+
+</body>
 <h2>Welcome to Tandem</h2>
-  <h6>Enter where your origin and destination</h6>
-  <form action='/login' method='POST'>
-    <input type='text' placeholder="origin" name='origin' autofocus class='formField' id="origin"></input>
-    <input type='text' placeholder="destination" name='destination' class='formField' id="destination"></input>
-    <input type='submit' value='find' class='findButton'id="searchButton"></input>
-    <input type='submit' value='List a Ride' class='listARide' id="listARide" href="createListing"></input>
+  <h3>Enter where your origin and destination</h3>
+<div>
+  <form action="/currentListings/" method="post" class=search id="locations">
+    <input type="text" name="origin" id="origin" placeholder="origin">
+    <input type="text" name="destiation" id="destination" placeholder="destination">
+    <button name="findButton" id="findButton">Find</button>
+    <!-- <a href="/currentListing"> -->
   </form>
+</div>
+<script src="../javascript/bundle.js"></script>
+
+
+</body>
+</html>

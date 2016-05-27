@@ -25,6 +25,16 @@ app.get('/', function(req, res){
 
 
 app.post('/currentListings', function(req, res) {
+  var fromMain = req.body.origin
+  console.log("fromMain:", fromMain)
+  search(req.body.origin)
+  .then(function(data) {
+    res.render('/currentListings/'+fromMain)
+  })
+})
+
+
+app.post('/moreCurrentListings', function(req, res) {
   search(req.body.origin)
   .then(function(data) {
     res.json(data)

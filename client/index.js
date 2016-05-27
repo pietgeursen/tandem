@@ -8,7 +8,7 @@ $("#searchButton").click(function(e) {
   var origin = $("#origin").val()
   var destination = $("#destination").val()
   request
-    .post('/currentListings')
+    .post('/moreCurrentListings')
     .send({ origin: origin, destination: destination})
     .end(function(err, res) {
       var newListing = res.body
@@ -16,3 +16,19 @@ $("#searchButton").click(function(e) {
     })
 
 })
+
+
+// $("#findButton").click(function(e) {
+//   e.preventDefault()
+//   var origin = $("#origin").val()
+//   var destination = $("#destination").val()
+//   console.log('origin:', origin)
+//   request
+//     .post('/currentListings')
+//     .send({ origin: origin, destination: destination})
+//     .end(function(err, res) {
+//       var newListing = res.body
+//       $('#newRides').html(currentListings({ listing: newListing }))
+//     })
+//
+// })

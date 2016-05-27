@@ -1,12 +1,9 @@
 var request = require('superagent')
 var $ = require('jquery')
-var currentListings = require('../views/_ridesListing.hbs')
-
-console.log("index.js")
+var currentListings = require('../views/currentListings/_ridesListing.hbs')
 
 
 $("#searchButton").click(function(e) {
-  console.log('hiiiiiiiiiiiii!!!')
   e.preventDefault()
   var origin = $("#origin").val()
   var destination = $("#destination").val()
@@ -15,8 +12,7 @@ $("#searchButton").click(function(e) {
     .send({ origin: origin, destination: destination})
     .end(function(err, res) {
       var newListing = res.body
-      $('#foo').html(currentListings({ listing: newListing }))
-
+      $('#newRides').html(currentListings({ listing: newListing }))
     })
 
 })

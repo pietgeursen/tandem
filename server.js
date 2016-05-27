@@ -35,8 +35,7 @@ app.post('/currentListings', function(req, res) {
 app.get('/currentListings/:origin', function(req, res){
   search(req.params.origin)
   .then(function(data){
-    console.log("this is data:,",  data)
-  res.render('currentListings', { listing: data})
+  res.render('./currentListings/currentListings', { listing: data })
   })
 })
 

@@ -14,36 +14,32 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
+function search(origin){
+  return knex('listings').where({origin: origin}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+}
+
 
 app.get('/', function(req, res){
-  res.send('success')
+  res.render('main')
 })
 
 
-
-app.get('/currentListings', function(req, res){
- console.log("to field: ", req.body)
-  knex('listings').innerJoin('users', 'listings.userID', '=', 'users.userID')
-  .then(function(data){
-  res.render('currentListings', { listing: data })
-
+app.post('/currentListings', function(req, res) {
+  search(req.body.origin)
+  .then(function(data) {
+    res.json(data)
   })
 })
 
-app.post('/currentListings', function(req, res) {
-  console.log('req.body: ', req.body)
-  res.json({'food' : 'burger'})
+
+app.get('/currentListings/:origin', function(req, res){
+  search(req.params.origin)
+  .then(function(data){
+    console.log("this is data:,",  data)
+  res.render('currentListings', { listing: data})
+  })
 })
 
-
-// app.get('/currentListings', function(req, res){
-//  console.log("to field: ", req.body)
-//   knex('listings').where({origin: 'Cromwell'}).innerJoin('users', 'listings.userID', '=', 'users.userID')
-//   .then(function(data){
-//   res.render('currentListings', { listing: data })
-//
-//   })
-// })
 
 
 app.listen(3000, function () {

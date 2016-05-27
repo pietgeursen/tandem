@@ -22,13 +22,28 @@ app.get('/', function(req, res){
 
 
 app.get('/currentListings', function(req, res){
-
-  knex('listings').where({origin: 'Kaeo'}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+ console.log("to field: ", req.body)
+  knex('listings').innerJoin('users', 'listings.userID', '=', 'users.userID')
   .then(function(data){
   res.render('currentListings', { listing: data })
 
   })
 })
+
+app.post('/currentListings', function(req, res) {
+  console.log('req.body: ', req.body)
+  res.json({'food' : 'burger'})
+})
+
+
+// app.get('/currentListings', function(req, res){
+//  console.log("to field: ", req.body)
+//   knex('listings').where({origin: 'Cromwell'}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+//   .then(function(data){
+//   res.render('currentListings', { listing: data })
+//
+//   })
+// })
 
 
 app.listen(3000, function () {

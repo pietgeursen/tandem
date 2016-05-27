@@ -2,14 +2,15 @@
   <head>
     <meta charset="utf-8">
     <title>Tandem</title>
+    <link type="text/css" rel="stylesheet" href="../styles/index.css">
   </head>
   <body>
     <div >
-      <form class=search id="locations" action="/currentListings" method="post">
-        <input type="text" name="origin" placeholder="To">
-        <input type="text" name="destiation" placeholder="From">
-        <input type="submit" name="searchButton">
-      </form>
+      <section class=search id="locations">
+        <input type="text" name="origin" id="origin" placeholder="To">
+        <input type="text" name="destiation" id="destination" placeholder="From">
+        <input type="submit" name="searchButton" id="searchButton">
+      </section>
     </div>
 
     <div class="numberOfRides">
@@ -28,7 +29,7 @@
       {{/each}}
     </div>
 
-<script src="bundle.js"></script>
+<script src="../javascript/bundle.js"></script>
 
   </body>
 </html>

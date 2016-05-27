@@ -1,14 +1,16 @@
-<h1 class="singleListHeading">heading</h1>
+<h1 class="singleListHeading">{{userID}}'s listing</h1>
 <div class="detailsContainer">
-  <p id="origin">Auckland</p>
-  <p id="destination">Wellington</p>
-  <p id="date">23rd June, 2016</p>
+  <p id="origin">Origin: {{origin}}</p>
+  <p id="destination">Destination: {{destination}}</p>
+  <p id="date">Date: {{date}}</p>
 </div>
 <div class="description">
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipatat non proident.
+  <h4>Description:</h4>
+  <p>{{description}}</p>
 </div>
+<br/>
 <div class="commentContainer">
-  <textarea name="comment" rows="8" cols="40"></textarea>
+  <textarea id="commentReply" name="comment" rows="8" cols="40"></textarea>
   <button type="button" name="reply">reply</button>
 </div>
 <div class="requestToBook">

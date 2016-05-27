@@ -25,8 +25,13 @@ app.get('/currentListings', function(req, res){
   })
 })
 
+// '2' in knex query will eventually be replaced with something like req.body.userID..
 app.get('/singleListing', function(req, res){
-  res.render('singleListing', { layout: '_layout' })
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
+  .then(function(data){
+    console.log('data: ', data)
+    res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, description: data[0].description, layout: '_layout' })
+  })
 })
 
 app.listen(3000, function () {

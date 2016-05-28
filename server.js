@@ -65,7 +65,6 @@ app.post('/createListing', function (req, res) {
   })
 })
 
-
 //=============== POST Routes ================
 
 
@@ -78,6 +77,13 @@ app.post('/currentListings', function(req, res) {
   })
 })
 
+// '2' in knex query will eventually be replaced with something like req.body.userID..
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
+  .then(function(data){
+    res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
+  })
+})
 
 app.post('/moreCurrentListings', function(req, res) {
   search(req.body.origin)
@@ -85,6 +91,7 @@ app.post('/moreCurrentListings', function(req, res) {
     res.json(data)
   })
 })
+
 
 //===================Ride Confirmation====================
 
@@ -96,6 +103,22 @@ app.get('/liftConfirm', function (req, res){
     })
 })
 
+//===================Authorisation Code===================
+
+app.post('/singleListing', function(req, res){
+  var comment = req.body.comment
+  var listingID = req.body.listingID
+  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
+  .then(function(data){
+    res.json(req.body)
+  })
+})
+
+// commenterID comes from session? params?
+// { commenterID: req.body.commenterID }
+
+// knex.select('comment', 'listingID').from('comments')
+// will this re-render whole page? with all data from 'get /singleListing' route?
 
 
 //===================Authorisation Code===================
@@ -155,7 +178,7 @@ passport.use(new FacebookStrategy ({
           name: profile.displayName
         }
 
-//============== set user in session
+// //============== set user in session ===================
 
         knex('users').insert(user).then(function (resp) {
           callback(null, user)
@@ -174,8 +197,8 @@ passport.deserializeUser(function(obj, callback) {
     callback(null, obj)
 })
 
-
+//============== Auth Ends ============================
 
 app.listen(3000, function () {
-  console.log('catching a lift on 3000!');
-});
+  console.log('catching a lift on 3000!')
+})

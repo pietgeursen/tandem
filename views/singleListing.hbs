@@ -1,0 +1,27 @@
+<h1 class="singleListHeading">{{userID}}'s listing</h1>
+<div class="detailsContainer">
+  <p id="origin">Origin: {{origin}}</p>
+  <p id="destination">Destination: {{destination}}</p>
+  <p id="date">Date: {{date}}</p>
+</div>
+<div class="description">
+  <h4>Description:</h4>
+  <p>{{description}}</p>
+</div>
+<br/>
+<div class="commentContainer">
+  <div id="appendedComments"></div>
+
+
+  <form action="/singleListing" class="" method="post">
+    <textarea id="commentReply" name="comment" rows="8" cols="40"></textarea>
+    <input id="listingID" type="hidden" name="listingID" value="{{listingID}}">
+    <input type="submit" name="name" value="comment" id="commentSubmit">
+  </form>
+  <div class="">
+    {{{listingComment}}}
+  </div>
+</div>
+<div class="requestToBook">
+  <button type="button" id="requestRide" name="requestToBook">Request a Ride</button>
+</div>

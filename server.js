@@ -22,27 +22,30 @@ app.use(express.static("public"));
 app.use(require('cookie-parser')());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }))
 
-
 dotenv.load()
 
 app.use(passport.initialize())
 app.use(passport.session())
 
+
+function search(origin){
+  return knex('listings').where({origin: origin}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+}
+
 app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
 
-app.get('/currentListings', function(req, res){
-  knex('listings').where({origin: 'Kaeo'}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+app.get('/currentListings/:origin', function(req, res){
+  search(req.params.origin)
   .then(function(data){
-    res.render('currentListings', { layout: '_layout', listing: data })
+    res.render('./currentListings/currentListings', {listing: data})
   })
 })
 
 app.get('/signup', function (req, res) {
   res.render('login')
 })
-
 
 app.get('/createListing', function (req, res) {
   res.render('createListing')
@@ -60,7 +63,51 @@ app.post('/createListing', function (req, res) {
   })
 })
 
-//////Authorisation Code /////////
+//=============== POST Routes ================
+
+
+app.post('/currentListings', function(req, res) {
+  var fromMain = req.body.origin
+  console.log("fromMain:", fromMain)
+  search(req.body.origin)
+  .then(function(data) {
+    res.redirect('/currentListings/'+fromMain)
+  })
+})
+
+// '2' in knex query will eventually be replaced with something like req.body.userID..
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
+  .then(function(data){
+    res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
+  })
+})
+
+app.post('/moreCurrentListings', function(req, res) {
+  search(req.body.origin)
+  .then(function(data) {
+    res.json(data)
+  })
+})
+
+app.post('/singleListing', function(req, res){
+  var comment = req.body.comment
+  var listingID = req.body.listingID
+  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
+  .then(function(data){
+    res.json(req.body)
+  })
+})
+
+// commenterID comes from session? params?
+// { commenterID: req.body.commenterID }
+
+// knex.select('comment', 'listingID').from('comments')
+// will this re-render whole page? with all data from 'get /singleListing' route?
+
+
+//===================Authorisation Code===================
+
 
 app.post('/signup', function (req, res) {
 var hash = bcrypt.hashSync( req.body.password)
@@ -90,54 +137,54 @@ app.post ('/login', function(req,res) {
     })
 })
 
-///OAuth///
+//============== OAuth =====================
 
-// app.get('/auth/facebook', passport.authenticate('facebook'))
-//
-// app.get('/auth/facebook/callback',
-//   passport.authenticate('facebook', { failureRedirect: '/login' }),
-//   function (req, res) {
-//     console.log('req.user', req.user)
-//     // req.session.user = req.user
-//     res.render('index', { user: req.user })
-// })
-//
-// passport.use(new FacebookStrategy ({
-//   clientID: process.env.FACEBOOK_CLIENT_ID,
-//   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-//   callbackURL: "http://localhost:3000/auth/facebook/callback"
-// },
-//   function (accessToken, refreshToken, profile, callback) {
-//     knex('users').select('*').where({
-//       facebookID: profile.id
-//     }).then(function (resp) {
-//       if (resp.length === 0) {
-//         var user = {
-//           facebookID: profile.id,
-//           name: profile.displayName
-//         }
-// // set user in session
-//         knex('users').insert(user).then(function (resp) {
-//           callback(null, user)
-//         })
-//       } else {
-//         callback(null, resp[0])
-//       }
-//     })
-//   }
-//  ))
-//
-//
-// passport.serializeUser(function(user, callback) {
-//     callback(null, user)
-// })
-// passport.deserializeUser(function(obj, callback) {
-//     callback(null, obj)
-// })
+app.get('/auth/facebook', passport.authenticate('facebook'))
 
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function (req, res) {
+    console.log('req.user', req.user)
+    // req.session.user = req.user
+    res.render('currentListings')
+})
 
-/////Auth Ends ///////
+passport.use(new FacebookStrategy ({
+  clientID: process.env.FACEBOOK_CLIENT_ID,
+  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/auth/facebook/callback"
+},
+  function (accessToken, refreshToken, profile, callback) {
+    knex('users').select('*').where({
+      facebookID: profile.id
+    }).then(function (resp) {
+      if (resp.length === 0) {
+        var user = {
+          facebookID: profile.id,
+          name: profile.displayName
+        }
+
+// //============== set user in session ===================
+
+        knex('users').insert(user).then(function (resp) {
+          callback(null, user)
+        })
+      } else {
+        callback(null, resp[0])
+      }
+    })
+  }
+ ))
+
+passport.serializeUser(function(user, callback) {
+    callback(null, user)
+})
+passport.deserializeUser(function(obj, callback) {
+    callback(null, obj)
+})
+
+//============== Auth Ends ============================
 
 app.listen(3000, function () {
-  console.log('catching a lift on 3000!');
-});
+  console.log('catching a lift on 3000!')
+})

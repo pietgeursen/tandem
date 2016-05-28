@@ -68,13 +68,6 @@ app.post('/moreCurrentListings', function(req, res) {
   })
 })
 
-// app.get('/currentListings', function(req, res){
-//   knex('listings').where({origin: 'Kaeo'}).innerJoin('users', 'listings.userID', '=', 'users.userID')
-//   .then(function(data){
-//     res.render('currentListings', { layout: '_layout', listing: data })
-//
-//   })
-// })
 
 //===================Authorisation Code===================
 

@@ -1,3 +1,76 @@
+@font-face {
+    font-family: Gotham_black;
+    src: url(../fonts/GOTHAM-BLACK.TTF);
+}
+
+h1, h2, h3, h4, h5 {
+	color: #fff;
+}
+
+/*this is a temp rule*/
+button {
+	color: #fff;
+}
+
 body {
-  background-color: pink !important;
+  background: #3b5998;
+}
+
+#green {
+	width: 100%;
+	height: 60px;
+	/*background: green;*/
+
+}
+
+#logo {
+	font-family: Gotham_black;
+	color: #fff;
+	font-size: 2em;
+	padding-bottom: 20px;
+	width: 200px;
+	float: left;
+	position: absolute;
+	top: 40px;
+	left: 40px;
+}
+
+/*navigaton*/
+nav.navigation ul,
+nav.navigation ul li {
+	margin: 0px;
+}
+
+nav.navigation {
+	float: right;
+	padding: 40px;
+	/*background: red;*/
+}
+nav.navigation ul li {
+	display: inline;
+	float: left;
+}
+
+nav.navigation ul li a{
+	display: inline-block;
+	color: #fff;
+	text-decoration: none;
+	padding: 10px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+}
+
+#signUpButton {
+	border-radius: 25px;
+	border: 1px solid #fff;
+	width: 100px;
+	text-align: center;
+}
+
+.landing {
+	text-align: center;
+}
+#findButton {
+	color: #fff;
 }

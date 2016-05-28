@@ -1,15 +1,40 @@
 <html>
 <head>
   <title>Tandem</title>
-  <link rel='stylesheet' type='text/css' href='/styles/index.css'></link>
+  <link rel="stylesheet" type="text/css" href="/styles/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/styles/skeleton.css">
+  <link rel='stylesheet' type='text/css' href='/styles/index.css'>
 </head>
 	<body>
-    <nav>
-    </nav>
-    <h1>Welcome to Tandem</h1>
-		<div class="six columns offset-by-three container">
-			{{{body}}}
-		</div>
-    <script src="javascript/bundle.js"></script>
+<!--   <header id="header">
+  <a class="site-logo" href="#">
+           tandem
+        </a>
+
+  <nav role="navigation" id="nav-main">
+    <ul>
+      <li><a href="#">How if works</a></li>
+      <li><a href="#">Log in</a></li>
+      <li id="signUpButton"><a href="#">Sign up</a></li>
+    </ul>
+  </nav>
+</header> -->
+    <div id="green">
+        <div id="logo">
+      tandem.
+      </div>
+        <nav class="navigation">
+        <ul>
+          <li><a href="#">How if works</a></li>
+          <li><a href="#">Log in</a></li>
+          <li id="signUpButton"><a href="#">Sign up</a></li>
+        </ul>
+       </nav>
+    </div>
+
+
+  	{{{body}}}
+
+  <script src="javascript/bundle.js"></script>
 	</body>
 </html>

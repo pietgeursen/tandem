@@ -1,23 +1,15 @@
-<link type="text/css" rel="stylesheet" href="../styles/index.css">
-<html>
+<!-- <section class="hero u-full-width"> -->
+  <div class="container landing">
+    <div class="twelve columns">
+      <h1>Welcome to Tandem</h1>
+      <h5>Enter your origin and destination</h5>
+      <form action="/currentListings/" method="post" class=search id="locations">
+        <input type="text" name="origin" id="origin" placeholder="origin">
+        <input type="text" name="destiation" id="destination" placeholder="destination">
+        <button name="findButton" id="findButton">Find</button>
+        <!-- <a href="/currentListing"> -->
+        </form>
+    </div>
+   </div> 
+<!-- </section> -->
 
- <head>
-   <meta charset="utf-8">
-   <title>Tandem</title>
-  <link type="text/css" rel="stylesheet" href="../styles/index.css">
- </head>
-
- </body>
-  <h3>Enter your origin and destination</h3>
-<div>
-  <form action="/currentListings/" method="post" class=search id="locations">
-    <input type="text" name="origin" id="origin" placeholder="origin">
-    <input type="text" name="destiation" id="destination" placeholder="destination">
-    <button name="findButton" id="findButton">Find</button>
-    <!-- <a href="/currentListing"> -->
-    </form>
-</div>
-<script src="../javascript/bundle.js"></script>
-
-</body>
-</html>

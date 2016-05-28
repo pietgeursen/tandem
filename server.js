@@ -75,13 +75,15 @@ app.post('/currentListings', function(req, res) {
   })
 })
 
-// '2' in knex query will eventually be replaced with something like req.body.userID..
+// '2' in knex query will eventually be replaced with something like req.body.listingID..
 app.get('/singleListing', function(req, res){
-  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
   .then(function(data){
+  // console.log('data: ', data)
     res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
   })
 })
+
 
 app.post('/moreCurrentListings', function(req, res) {
   search(req.body.origin)
@@ -90,7 +92,7 @@ app.post('/moreCurrentListings', function(req, res) {
   })
 })
 
-app.post('/singleListing', function(req, res){
+app.post('/commentOnListing', function(req, res){
   var comment = req.body.comment
   var listingID = req.body.listingID
   knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })

@@ -23,9 +23,10 @@ $(document).ready(function(){
     var comment = $('#commentReply').val()
     var listingID = $('#listingID').val()
     request
-      .post('/singleListing')
+      .post('/commentOnListing')
       .send({ comment: comment, listingID: listingID })
       .end(function(err, res){
+        // console.log('res: ', res)
         var data = res.body
         $('#appendedComments').append(listingComment({comment: data.comment, listingID: data.listingID}))
         $('#commentReply').val('')

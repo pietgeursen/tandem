@@ -43,7 +43,7 @@ app.get('/signup', function (req, res) {
   res.render('login')
 })
 
-/////
+
 app.get('/createListing', function (req, res) {
   res.render('createListing')
 })

@@ -49,6 +49,21 @@ app.get('/signup', function (req, res) {
   res.render('login')
 })
 
+app.get('/createListing', function (req, res) {
+  res.render('createListing')
+})
+
+app.post('/createListing', function (req, res) {
+  res.render('createListing')
+  console.log("this should be data from the form: ", req.body)
+  knex('listings').insert(req.body)
+  .then(function (data) {
+    console.log("data: ", data)
+  })
+  .catch(function (error) {
+    console.log("catch error: ", error)
+  })
+})
 
 function singleListing(listingID){
   return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
@@ -75,6 +90,15 @@ app.post('/currentListings', function(req, res) {
   })
 })
 
+// '2' in knex query will eventually be replaced with something like req.body.listingID..
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
+  .then(function(data){
+  // console.log('data: ', data)
+    res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
+  })
+})
+
 
 app.post('/moreCurrentListings', function(req, res) {
   search(req.body.origin)
@@ -82,6 +106,21 @@ app.post('/moreCurrentListings', function(req, res) {
     res.json(data)
   })
 })
+
+app.post('/commentOnListing', function(req, res){
+  var comment = req.body.comment
+  var listingID = req.body.listingID
+  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
+  .then(function(data){
+    res.json(req.body)
+  })
+})
+
+// commenterID comes from session? params?
+// { commenterID: req.body.commenterID }
+
+// knex.select('comment', 'listingID').from('comments')
+// will this re-render whole page? with all data from 'get /singleListing' route?
 
 
 // app.post('/singleListing', function(req, res){
@@ -97,6 +136,7 @@ app.post('/moreCurrentListings', function(req, res) {
 
 
 //===================Authorisation Code===================
+
 
 app.post('/signup', function (req, res) {
 var hash = bcrypt.hashSync( req.body.password)
@@ -153,7 +193,7 @@ passport.use(new FacebookStrategy ({
           name: profile.displayName
         }
 
-//============== set user in session
+// //============== set user in session ===================
 
         knex('users').insert(user).then(function (resp) {
           callback(null, user)
@@ -172,10 +212,8 @@ passport.deserializeUser(function(obj, callback) {
     callback(null, obj)
 })
 
-
-/////Auth Ends ///////
-
+//============== Auth Ends ============================
 
 app.listen(3000, function () {
-  console.log('catching a lift on 3000!');
-});
+  console.log('catching a lift on 3000!')
+})

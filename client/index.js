@@ -1,6 +1,6 @@
 var request = require('superagent')
 var $ = require('jquery')
-var currentListings = require('../views/currentListings/_ridesListing.hbs')
+var ridesListing = require('../views/currentListings/_ridesListing.hbs')
 var singleListing = require('../views/singleListing.hbs')
 var listingComment = require('../views/listingComment.hbs')
 
@@ -14,7 +14,7 @@ $(document).ready(function(){
       .send({ origin: origin, destination: destination })
       .end(function(err, res) {
         var newListing = res.body
-        $('#newRides').html(currentListings({ listing: newListing }))
+        $('#newRides').html(ridesListing({ listing: newListing }))
       })
   })
 
@@ -33,23 +33,20 @@ $(document).ready(function(){
       })
   })
 
+  $(".seeMore").click(function(e){
+    e.preventDefault()
+    var listingID = e.target.id
+    console.log("listingID :", listingID)
+    request
+    .post('/singleListing' )
+      .send({ listingID: listingID })
+      .end(function(err, res){
+        var listingIDfromServer = res.body
+        $('#newRides').html(singleListing({ listing : listingIDfromServer }))
+    })
+  })
+
 }) // close doc ready
 
 
 
-
-
-// $("#findButton").click(function(e) {
-//   e.preventDefault()
-//   var origin = $("#origin").val()
-//   var destination = $("#destination").val()
-//   console.log('origin:', origin)
-//   request
-//     .post('/currentListings')
-//     .send({ origin: origin, destination: destination})
-//     .end(function(err, res) {
-//       var newListing = res.body
-//       $('#newRides').html(currentListings({ listing: newListing }))
-//     })
-//
-// })

@@ -1,14 +1,20 @@
-<h1 class="singleListHeading">{{userID}}'s listing</h1>
-<div class="detailsContainer">
-  <p id="origin">Origin: {{origin}}</p>
-  <p id="destination">Destination: {{destination}}</p>
-  <p id="date">Date: {{date}}</p>
+<div class="singleListing">
+  {{#each data}}
+    <h1 class="singleListHeading">{{this.name}}'s listing</h1>
+    <br>
+    <h4>{{this.origin}} - {{this.destination}}</h4>
+    <p><strong>Driver:</strong></p><p>{{this.name}}</p>
+    <h3><i>(date and time field)</i> {{this.dateTime}} - {{this.time}}</h3>
+    <p>{{this.gender}}</p>
+    <p>{{this.age}}</p>
+    <p>I've held my driver's licence for {{this.driverLicenceDuration}} years</p>
+    <br>
+    <h3>Description</h3>
+    <p>{{this.description}}
+
+  {{/each}}
 </div>
-<div class="description">
-  <h4>Description:</h4>
-  <p>{{description}}</p>
-</div>
-<br/>
+
 <div class="commentContainer">
   <div id="appendedComments"></div>
 

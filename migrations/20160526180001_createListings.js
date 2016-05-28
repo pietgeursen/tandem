@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
   table.string('origin');
   table.string('destination');
   table.dateTime('dateTime');
-  table.string('description')
+  table.string('description', [500])
   })
 };
 

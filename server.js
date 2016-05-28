@@ -32,6 +32,10 @@ function search(origin){
   return knex('listings').where({origin: origin}).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
+function singleListing(listingID){
+  return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+}
+
 app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
@@ -47,24 +51,52 @@ app.get('/signup', function (req, res) {
   res.render('login', {layout: '_layout'})
 })
 
+app.get('/createListing', function (req, res) {
+  res.render('createListing')
+})
+
+// '2' in knex query will eventually be replaced with something like req.body.listingID..
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
+  .then(function(data){
+  console.log('data: ', data)
+    res.render('singleListing',{ data: data })
+    // { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' }
+  })
+})
+
+// commenterID comes from session? params?
+// { commenterID: req.body.commenterID }
+
 
 //=============== POST Routes ================
 
 
 app.post('/currentListings', function(req, res) {
   var fromMain = req.body.origin
-  console.log("fromMain:", fromMain)
   search(req.body.origin)
   .then(function(data) {
     res.redirect('/currentListings/'+fromMain)
   })
 })
 
-// '2' in knex query will eventually be replaced with something like req.body.userID..
-app.get('/singleListing', function(req, res){
-  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
-  .then(function(data){
-    res.render('singleListing', { layout: '_layout', userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
+app.post('/createListing', function (req, res) {
+  res.render('createListing')
+  console.log("this should be data from the form: ", req.body)
+  knex('listings').insert(req.body)
+  .then(function (data) {
+    console.log("data: ", data)
+  })
+  .catch(function (error) {
+    console.log("catch error: ", error)
+  })
+})
+
+app.post('/singleListing', function(req, res) {
+  singleListing(req.body.listingID)
+  .then(function(data) {
+    res.json(data)
+
   })
 })
 
@@ -75,7 +107,7 @@ app.post('/moreCurrentListings', function(req, res) {
   })
 })
 
-app.post('/singleListing', function(req, res){
+app.post('/commentOnListing', function(req, res){
   var comment = req.body.comment
   var listingID = req.body.listingID
   knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
@@ -84,14 +116,20 @@ app.post('/singleListing', function(req, res){
   })
 })
 
-// commenterID comes from session? params?
-// { commenterID: req.body.commenterID }
+// app.post('/singleListing', function(req, res){
+//  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
+//  .then(function(data){
+//    console.log('data: ', data)
+//  })
+//  .then(function(data){
+//    res.render('listingComment', { layout : 'singleListing' })
+//  })
+// })
 
-// knex.select('comment', 'listingID').from('comments')
-// will this re-render whole page? with all data from 'get /singleListing' route?
 
 
 //===================Authorisation Code===================
+
 
 app.post('/signup', function (req, res) {
 var hash = bcrypt.hashSync( req.body.password)

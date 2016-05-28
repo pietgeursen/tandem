@@ -9,12 +9,11 @@ $("#searchButton").click(function(e) {
   var destination = $("#destination").val()
   request
     .post('/moreCurrentListings')
-    .send({ origin: origin, destination: destination})
+    .send({ origin: origin, destination: destination })
     .end(function(err, res) {
       var newListing = res.body
       $('#newRides').html(currentListings({ listing: newListing }))
     })
-
 })
 
 

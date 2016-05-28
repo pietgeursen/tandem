@@ -28,9 +28,13 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 
-function search(origin){
+function search(origin){  // working here =======
   return knex('listings').where({origin: origin}).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
+// function search(origin, destination){  // working here =======
+//   console.log('origin is defined, not destination:', destination)
+//   return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+// }
 
 function singleListing(listingID){
   return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
@@ -40,12 +44,13 @@ app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
 
-app.get('/currentListings/:origin', function(req, res){
-  search(req.params.origin)
+app.get('/currentListings/:origin', function(req, res){// working here =====
+  search(req.params.origin, req.params.destination)
   .then(function(data){
     res.render('./currentListings/currentListings', {listing: data})
   })
 })
+
 
 app.get('/signup', function (req, res) {
   res.render('login')
@@ -65,30 +70,26 @@ app.get('/singleListing', function(req, res){
   })
 })
 
-// commenterID comes from session? params?
-// { commenterID: req.body.commenterID }
-
-
 //=============== POST Routes ================
 
 
-app.post('/currentListings', function(req, res) {
-  var fromMain = req.body.origin
-  search(req.body.origin)
+app.post('/main', function(req, res) { //============working here
+  var originFromMain = req.body.origin
+  var destinationFromMain = req.body.destination
+  console.log('origin from Main', originFromMain)
+  console.log('destination from Main', destinationFromMain) //=== hitting here.
+  search(originFromMain, destinationFromMain)
   .then(function(data) {
-    res.redirect('/currentListings/'+fromMain)
+    res.redirect('/currentListings/'+ originFromMain)
   })
 })
 
 app.post('/createListing', function (req, res) {
   res.render('createListing')
-  console.log("this should be data from the form: ", req.body)
   knex('listings').insert(req.body)
   .then(function (data) {
-    console.log("data: ", data)
   })
   .catch(function (error) {
-    console.log("catch error: ", error)
   })
 })
 
@@ -114,17 +115,6 @@ app.post('/commentOnListing', function(req, res){
     res.json(req.body)
   })
 })
-
-// app.post('/singleListing', function(req, res){
-//  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
-//  .then(function(data){
-//    console.log('data: ', data)
-//  })
-//  .then(function(data){
-//    res.render('listingComment', { layout : 'singleListing' })
-//  })
-// })
-
 
 
 //===================Authorisation Code===================

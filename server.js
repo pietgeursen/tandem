@@ -84,23 +84,11 @@ app.post('/singleListing', function(req, res){
   })
 })
 
-// { commenterID: req.body.commenterID }
 // commenterID comes from session? params?
+// { commenterID: req.body.commenterID }
 
-// console.log('data: ', data)
-// res.send('success!')
-    // console.log('yea')
-    // console.log('req.body: ', req.body)
-    // knex.select('comment', 'listingID').from('comments')
-
-
- // will this re-render whole page? with all data from 'get /singleListing' route?
-
-// app.post('/listingComment', function(req, res){
-//
-//
-// })
-
+// knex.select('comment', 'listingID').from('comments')
+// will this re-render whole page? with all data from 'get /singleListing' route?
 
 
 //===================Authorisation Code===================

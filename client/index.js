@@ -41,8 +41,10 @@ $(document).ready(function(){
     .post('/singleListing' )
       .send({ listingID: listingID })
       .end(function(err, res){
+        // console.log('res: ', res)
         var listingIDfromServer = res.body
-        $('#newRides').html(singleListing({ listing : listingIDfromServer }))
+        // console.log('listingIDfromServer: ', listingIDfromServer)
+        $('#newRides').html(singleListing({ data : listingIDfromServer }))
     })
   })
 

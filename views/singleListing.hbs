@@ -1,23 +1,23 @@
-<<<<<<< HEAD
+<div class="singleListing">
+  {{#each listing}}
 
-      <div class="singleListing">
-        <h3>Single listing page</h3>
-        {{#each listing}}
+      <h3><i>(date and time field)</i> {{this.dateTime}} - {{this.time}}</h3>
+      <br>
+      <h4>{{this.origin}} - {{this.destination}}</h4>
+      <p><strong>Driver:</strong></p><p>{{this.name}}</p>
+      <p>{{this.gender}}</p>
+      <p>{{this.age}}</p>
+      <p>I've held my driver's licence for {{this.driverLicenceDuration}} years</p>
+      <br>
+      <h3>Description</h3>
+      <p>{{this.description}}
 
-            <h3><i>(date and time field)</i> {{this.dateTime}} - {{this.time}}</h3>
-            <br>
-            <h4>{{this.origin}} - {{this.destination}}</h4>
-            <p><strong>Driver:</strong></p><p>{{this.name}}</p>
-            <p>{{this.gender}}</p>
-            <p>{{this.age}}</p>
-            <p>I've held my driver's licence for {{this.driverLicenceDuration}} years</p>
-            <br>
-            <h3>Description</h3>
-            <p>{{this.description}}
+  {{/each}}
+</div>
 
-        {{/each}}
-      </div>
-=======
+
+
+
 <h1 class="singleListHeading">{{userID}}'s listing</h1>
 <div class="detailsContainer">
   <p id="origin">Origin: {{origin}}</p>
@@ -45,4 +45,3 @@
 <div class="requestToBook">
   <button type="button" id="requestRide" name="requestToBook">Request a Ride</button>
 </div>
->>>>>>> master

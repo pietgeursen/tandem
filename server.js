@@ -32,6 +32,8 @@ function search(origin){
   return knex('listings').where({origin: origin}).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
+
+
 app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
@@ -48,12 +50,25 @@ app.get('/signup', function (req, res) {
 })
 
 
+function singleListing(listingID){
+  return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+}
+// function singleListing(listingID){
+//   return knex('listings').where({listingID: listingID}).select("*")
+// }
+
+app.post('/singleListing', function(req, res) {
+  singleListing(req.body.listingID)
+  .then(function(data) {
+    res.json(data)
+  })
+})
+
 //=============== POST Routes ================
 
 
 app.post('/currentListings', function(req, res) {
   var fromMain = req.body.origin
-  console.log("fromMain:", fromMain)
   search(req.body.origin)
   .then(function(data) {
     res.redirect('/currentListings/'+fromMain)
@@ -67,6 +82,18 @@ app.post('/moreCurrentListings', function(req, res) {
     res.json(data)
   })
 })
+
+
+// app.post('/singleListing', function(req, res){
+//  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
+//  .then(function(data){
+//    console.log('data: ', data)
+//  })
+//  .then(function(data){
+//    res.render('listingComment', { layout : 'singleListing' })
+//  })
+// })
+
 
 
 //===================Authorisation Code===================

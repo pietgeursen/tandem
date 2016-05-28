@@ -47,6 +47,21 @@ app.get('/signup', function (req, res) {
   res.render('login')
 })
 
+app.get('/createListing', function (req, res) {
+  res.render('createListing')
+})
+
+app.post('/createListing', function (req, res) {
+  res.render('createListing')
+  console.log("this should be data from the form: ", req.body)
+  knex('listings').insert(req.body)
+  .then(function (data) {
+    console.log("data: ", data)
+  })
+  .catch(function (error) {
+    console.log("catch error: ", error)
+  })
+})
 
 //=============== POST Routes ================
 
@@ -92,6 +107,7 @@ app.post('/singleListing', function(req, res){
 
 
 //===================Authorisation Code===================
+
 
 app.post('/signup', function (req, res) {
 var hash = bcrypt.hashSync( req.body.password)

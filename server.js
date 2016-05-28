@@ -43,6 +43,18 @@ app.get('/signup', function (req, res) {
   res.render('login')
 })
 
+app.post('/createListing', function (req, res) {
+  res.render('createListing')
+  console.log("this should be data from the form: ", req.body)
+  knex('listings').insert(req.body)
+  .then(function (data) {
+    res.send("Confirmation Page will be rendered at this point")
+  })
+  .catch(function (error) {
+    console.log("catch error: ", error)
+  })
+})
+
 //////Authorisation Code /////////
 
 app.post('/signup', function (req, res) {

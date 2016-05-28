@@ -1,19 +1,33 @@
+<div class="singleListing">
+  {{#each data}}
+    <h1 class="singleListHeading">{{this.name}}'s listing</h1>
+    <br>
+    <h4>{{this.origin}} - {{this.destination}}</h4>
+    <p><strong>Driver:</strong></p><p>{{this.name}}</p>
+    <h3><i>(date and time field)</i> {{this.dateTime}} - {{this.time}}</h3>
+    <p>{{this.gender}}</p>
+    <p>{{this.age}}</p>
+    <p>I've held my driver's licence for {{this.driverLicenceDuration}} years</p>
+    <br>
+    <h3>Description</h3>
+    <p>{{this.description}}
 
-      <div class="singleListing">
-        <h3>Single listing page</h3>
-        {{#each listing}}
+  {{/each}}
+</div>
 
-            <h3><i>(date and time field)</i> {{this.dateTime}} - {{this.time}}</h3>
-            <br>
-            <h4>{{this.origin}} - {{this.destination}}</h4>
-            <p><strong>Driver:</strong></p><p>{{this.name}}</p>
-            <p>{{this.gender}}</p>
-            <p>{{this.age}}</p>
-            <p>{{this.aboutMe}}</p>
-            <p>I've held my driver's licence for {{this.driverLicenceDuration}} years</p>
-            <br>
-            <h3>Description</h3>
-            <p>{{this.description}}
+<div class="commentContainer">
+  <div id="appendedComments"></div>
 
-        {{/each}}
-      </div>
+
+  <form action="/singleListing" class="" method="post">
+    <textarea id="commentReply" name="comment" rows="8" cols="40"></textarea>
+    <input id="listingID" type="hidden" name="listingID" value="{{listingID}}">
+    <input type="submit" name="name" value="comment" id="commentSubmit">
+  </form>
+  <div class="">
+    {{{listingComment}}}
+  </div>
+</div>
+<div class="requestToBook">
+  <button type="button" id="requestRide" name="requestToBook">Request a Ride</button>
+</div>

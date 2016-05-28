@@ -47,6 +47,7 @@ app.get('/signup', function (req, res) {
   res.render('login')
 })
 
+//============Create a Listing================
 
 app.get('/createListing', function (req, res) {
   res.render('createListing')
@@ -84,6 +85,17 @@ app.post('/moreCurrentListings', function(req, res) {
     res.json(data)
   })
 })
+
+//===================Ride Confirmation====================
+
+app.get('/liftConfirm', function (req, res){
+  knex.select('origin', 'destination', 'departureDate', 'departureTime').from('listings')
+    .then (function(data) {
+      console.log("data[0]: ", data[0])
+      res.render('liftConfirm', ({data: data[0] }) )
+    })
+})
+
 
 
 //===================Authorisation Code===================

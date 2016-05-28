@@ -10,15 +10,18 @@
 </div>
 <br/>
 <div class="commentContainer">
+  <div id="appendedComments"></div>
+
+
   <form action="/singleListing" class="" method="post">
     <textarea id="commentReply" name="comment" rows="8" cols="40"></textarea>
-    <input type="hidden" name="listingID" value="{{listingID}}">
-    <input type="submit" name="name" value="comment">
+    <input id="listingID" type="hidden" name="listingID" value="{{listingID}}">
+    <input type="submit" name="name" value="comment" id="commentSubmit">
   </form>
   <div class="">
     {{{listingComment}}}
   </div>
 </div>
 <div class="requestToBook">
-  <button type="button" name="requestToBook">Request a Ride</button>
+  <button type="button" id="requestRide" name="requestToBook">Request a Ride</button>
 </div>

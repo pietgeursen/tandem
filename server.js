@@ -75,7 +75,14 @@ app.post('/moreCurrentListings', function(req, res) {
   })
 })
 
-
+app.post('/singleListing', function(req, res){
+  var comment = req.body.comment
+  var listingID = req.body.listingID
+  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
+  .then(function(data){
+    res.json(req.body)
+  })
+})
 
 // { commenterID: req.body.commenterID }
 // commenterID comes from session? params?
@@ -86,17 +93,8 @@ app.post('/moreCurrentListings', function(req, res) {
     // console.log('req.body: ', req.body)
     // knex.select('comment', 'listingID').from('comments')
 
-app.post('/singleListing', function(req, res){
-  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
-  .then(function(data){
-    console.log('data: ', data)
-  })
-  .then(function(data){
-    res.render('listingComment', { layout : 'singleListing' })
-  })
-})
+
  // will this re-render whole page? with all data from 'get /singleListing' route?
-  // })
 
 // app.post('/listingComment', function(req, res){
 //

@@ -1,3 +1,7 @@
+var express = require('express')
+var app = express()
+var bodyParser = require('body-parser')
+var path = require('path')
 var bcrypt = require('bcrypt-node')
 var Knex = require('knex')
 var passport = require('passport')
@@ -17,7 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 app.use(require('cookie-parser')());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }))
-
 dotenv.load()
 
 app.use(passport.initialize())
@@ -93,14 +96,19 @@ app.post('/moreCurrentListings', function(req, res) {
 
 app.get('/liftConfirm', function (req, res){
   // console.log("req: ", req, "res: ", res)
-  knex.select('origin', 'destination', 'departureDate', 'departureTime').from('listings')
+  knex.select('origin', 'destination', 'departureDate', 'departureTime', 'listingID').from('listings')
     .then (function(data) {
-      res.json(data[8])
+      res.json(data[8]) // need to align this with the listing clicked not hard coded
+      console.log("data: ",data)
     })
 })
 
-app.get('/liftEnjoy', function(req. res) {
-
+app.post('/liftEnjoy', function(req, res) {
+  console.log("res.body: ", res.body, "req.body: ", req.body)
+  knex('ride_requests').insert({ listingID: 'listingID', description: 'description'})
+    .then (function(data){
+      res.json(data)
+    })
 })
 
 //===================Authorisation Code===================

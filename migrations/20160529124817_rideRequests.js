@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
-  console.log('rideRequests table created!')
-  return knex.schema.createTableIfNotExists('rideRequests', function(table) {
+  console.log('ride_requests table created!')
+  return knex.schema.createTableIfNotExists('ride_requests', function(table) {
     table.integer('listingID');
     table.integer('userID');
     table.string('description');
@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('rideRequests').then(function () {
+  return knex.schema.dropTableIfExists('ride_requests').then(function () {
     console.log('listings table was dropped')
   })
 };

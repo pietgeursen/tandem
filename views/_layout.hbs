@@ -1,20 +1,29 @@
 <html>
 <head>
   <title>Tandem</title>
-  <link rel='stylesheet' type='text/css' href='/css/normalize.css'></link>
-  <link rel='stylesheet' type='text/css' href='/css/skeleton.css'></link>
-  <link rel='stylesheet' type='text/css' href='/styles/index.css'></link>
+  <link rel="stylesheet" type="text/css" href="/styles/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/styles/skeleton.css">
+  <link rel='stylesheet' type='text/css' href='/styles/index.css'>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 </head>
-	<body>
-    <nav>
-    </nav>
-    <h1>Welcome to Tandem...</h1>
-		<div class="six columns offset-by-three container">
-			{{{body}}}
-		</div>
-    <script src="/javascript/bundle.js"></script>
-    <script src="/javascript/formValidation.js"></script>
-
-	</body>
+<body>
+  <div class="u-full-width">
+    <header class="main-navigation">  
+      <div id="logo">
+        <a href="/">tandem.</a>
+      </div>
+      <nav class="navigation">
+        <ul>
+          <li><a href="#">How it works</a></li>
+          <li><a href="/signin">sign in</a></li>
+          <li id="signUpButton"><a href="/signup">Sign up</a></li>
+        </ul>
+      </nav>
+    </header>  
+  	{{{body}}}
+   </div> 
+  <script src="javascript/bundle.js"></script>
+  <script src="/javascript/formValidation.js"></script>
+</body>
 </html>
 <!--  -->

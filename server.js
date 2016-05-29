@@ -26,9 +26,21 @@ dotenv.load()
 app.use(passport.initialize())
 app.use(passport.session())
 
+function validateForm() {
+  console.log('...boom')
+    var x = document.forms["searchForm"]["origin"].value;
+    if (x == null || x == "") {
+      var message = "Ooops...please enter a start point"
+        document.getElementById("alert").innerHTML = message;
+        return false
+    }
+}
+
 
 function search(origin, destination){
-  return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+  return knex('listings')
+  .where({origin: origin, destination: destination})
+  .innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
 app.get('/', function(req, res){
@@ -37,15 +49,18 @@ app.get('/', function(req, res){
 
 app.get('/currentListings', function(req, res){
   // results of querys in url come into the query object
-  console.log(req.query)
   search(req.query.origin, req.query.destination)
   .then(function(data){
-    res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
+    res.render('./currentListings/currentListings', {layout: '_layout', listing: data})
   })
 })
 
 app.get('/signup', function (req, res) {
-  res.render('login')
+  res.render('register', {layout: '_layout'})
+})
+
+app.get('/signin', function (req, res) {
+  res.render('login', {layout: '_layout'})
 })
 
 //============Create a Listing================
@@ -78,6 +93,8 @@ app.post('/currentListings', function(req, res) {
 })
 
 app.post('/main', function(req, res) { //============working here
+
+console.log(req.body)
   var originFromMain = req.body.origin
   var destinationFromMain = req.body.destination
   search(originFromMain, destinationFromMain)
@@ -97,7 +114,7 @@ app.get('/singleListing', function(req, res){
 
 app.post('/createListing', function (req, res) {
   res.render('createListing')
-  knex('listings').insert(req.body)
+    knex('listings').insert(req.body)
   .then(function (data) {
   })
   .catch(function (error) {
@@ -105,9 +122,11 @@ app.post('/createListing', function (req, res) {
 })
 
 app.post('/singleListing', function(req, res) {
+  console.log('req.body: ', req.body)
   singleListing(req.body.listingID)
   .then(function(data) {
     res.json(data)
+
   })
 })
 

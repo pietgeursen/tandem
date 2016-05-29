@@ -29,7 +29,9 @@ app.use(passport.session())
 
 
 function search(origin, destination){
-  return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+  return knex('listings')
+  .where({origin: origin, destination: destination})
+  .innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
 function singleListing(listingID){
@@ -76,6 +78,8 @@ app.get('/singleListing', function(req, res){
 
 
 app.post('/main', function(req, res) { //============working here
+
+console.log(req.body)
   var originFromMain = req.body.origin
   var destinationFromMain = req.body.destination
   search(originFromMain, destinationFromMain)
@@ -94,6 +98,7 @@ app.post('/createListing', function (req, res) {
 })
 
 app.post('/singleListing', function(req, res) {
+  console.log('req.body: ', req.body)
   singleListing(req.body.listingID)
   .then(function(data) {
     res.json(data)

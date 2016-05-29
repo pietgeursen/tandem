@@ -43,10 +43,10 @@ function search(origin, destination){
   return knex('listings').where(searchObject).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
-function profile(profile){
-  return knex('users').where('userID', '=', 'users.userID')
-
-}
+// function profile(profile){
+//   return knex('users').where('userID', '=', 'users.userID')
+//
+// }
 
 function singleListing(listingID){
   return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
@@ -134,9 +134,9 @@ app.post('/moreCurrentListings', function(req, res) {
   })
 })
 
-app.post('/profile', function(req, res)
-  profile
-)
+// app.post('/profile', function(req, res)
+//   profile
+// )
 
 //===================Ride Confirmation====================
 

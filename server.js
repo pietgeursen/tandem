@@ -35,19 +35,23 @@ function validateForm() {
     }
 }
 
-function search(o, d){
-  var searchObject = {origin: o}
-  if(d){
-    searchObject.destination = d
+function search(origin, destination){
+  var searchObject = {origin: origin}
+  if(destination){
+    searchObject.destination = destination
   }
-
   return knex('listings').where(searchObject).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
+// function profile(profile){
+//   return knex('users').where('userID', '=', 'users.userID')
+//
+// }
 
 function singleListing(listingID){
   return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
+
 app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
@@ -77,7 +81,6 @@ app.get('/createListing', function (req, res) {
 
 app.post('/createListing', function (req, res) {
   res.render('createListing')
-  console.log("this should be data from the form: ", req.body)
   knex('listings').insert(req.body)
   .then(function (data) {
     res.render('listingConfirm')
@@ -85,6 +88,13 @@ app.post('/createListing', function (req, res) {
       .catch(function(error) {
         console.log("catch error: ", error)
       })
+  })
+})
+
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
+  .then(function(data){
+    res.render('singleListing',{ data: data })
   })
 })
 
@@ -110,8 +120,6 @@ app.post('/main', function(req, res) {
   })
 })
 
-
-// '2' in knex query will eventually be replaced with something like req.body.userID..
 app.get('/singleListing', function(req, res){
   knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
   .then(function(data){
@@ -142,19 +150,20 @@ app.post('/moreCurrentListings', function(req, res) {
   })
 })
 
+// app.post('/profile', function(req, res)
+//   profile
+// )
 
 //===================Ride Confirmation====================
 
 app.get('/liftConfirm', function (req, res){
-  // console.log("req: ", req, "res: ", res)
   knex.select('origin', 'destination', 'departureDate', 'departureTime', 'listingID').from('listings')
     .then (function(data) {
-      res.json(data[8]) // need to align this with the listing clicked not hard coded
+      res.json(data[8])
     })
 })
 
 app.post('/liftEnjoy', function(req, res) {
-  console.log("req.body: ", req.body)
   var description = req.body.description
   var listingID = req.body.listingID
   knex('ride_requests').insert({listingID: listingID, description: description})
@@ -174,13 +183,6 @@ app.post('/singleListing', function(req, res){
     res.json(req.body)
   })
 })
-
-
-// commenterID comes from session? params?
-// { commenterID: req.body.commenterID }
-
-// knex.select('comment', 'listingID').from('comments')
-// will this re-render whole page? with all data from 'get /singleListing' route?
 
 //===================Authorisation Code===================
 

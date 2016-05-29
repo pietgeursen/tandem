@@ -27,6 +27,16 @@ dotenv.load()
 app.use(passport.initialize())
 app.use(passport.session())
 
+function validateForm() {
+  console.log('...boom')
+    var x = document.forms["searchForm"]["origin"].value;
+    if (x == null || x == "") {
+      var message = "Ooops...please enter a start point"
+        document.getElementById("alert").innerHTML = message;
+        return false
+    }
+}
+
 
 function search(origin, destination){
   return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
@@ -42,7 +52,6 @@ app.get('/', function(req, res){
 
 app.get('/currentListings', function(req, res){
   // results of querys in url come into the query object
-  console.log(req.query)
   search(req.query.origin, req.query.destination)
   .then(function(data){
     res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
@@ -81,7 +90,7 @@ app.post('/main', function(req, res) { //============working here
 
 app.post('/createListing', function (req, res) {
   res.render('createListing')
-  knex('listings').insert(req.body)
+    knex('listings').insert(req.body)
   .then(function (data) {
   })
   .catch(function (error) {

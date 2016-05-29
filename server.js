@@ -99,13 +99,14 @@ app.get('/liftConfirm', function (req, res){
   knex.select('origin', 'destination', 'departureDate', 'departureTime', 'listingID').from('listings')
     .then (function(data) {
       res.json(data[8]) // need to align this with the listing clicked not hard coded
-      console.log("data: ",data)
     })
 })
 
 app.post('/liftEnjoy', function(req, res) {
-  console.log("res.body: ", res.body, "req.body: ", req.body)
-  knex('ride_requests').insert({ listingID: 'listingID', description: 'description'})
+  console.log("req.body: ", req.body)
+  var description = req.body.description
+  var listingID = req.body.listingID
+  knex('ride_requests').insert({listingID: listingID, description: description})
     .then (function(data){
       res.json(data)
     })

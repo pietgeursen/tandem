@@ -30,22 +30,22 @@ $(document).ready(function(){
       var data = res.body
       $('body').html(liftConfirm({origin: res.body.origin, destination: res.body.destination,
             date: res.body.departureDate, time: res.body.departureTime, listingID: res.body.listingID}))
-        console.log('logging res.body:', res.body)
       })
   })
 
   $('.rideConfirm').click(function(e) {
     e.preventDefault()
-    console.log(e)
     console.log("hitting listener!")
     var listingID = e.target.id
-    console.log(listingID)
+    var description = $('#description').val()
+    console.log("here's the listing ID: ", listingID, "heres description: ", description)
     request
       .post('/liftEnjoy')
-      .send({listingID: listingID, description: description})
+      .send({listingID: listingID, description: description })
       .end(function (err, res) {
+        console.log("error: ", err)
         console.log("hopefully there's some data in request Ride table!")
-        $('body').html(liftEnjoy({layout:_layout,  name: Bob}))
+        $('body').html(liftEnjoy())
       })
   })
 

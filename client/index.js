@@ -3,6 +3,8 @@ var $ = require('jquery')
 var ridesListing = require('../views/currentListings/_ridesListing.hbs')
 var singleListing = require('../views/singleListing.hbs')
 var listingComment = require('../views/listingComment.hbs')
+var liftConfirm = require('../views/liftConfirm.hbs')
+var liftEnjoy = require('../views/liftEnjoy.hbs')
 
 $(document).ready(function(){
 
@@ -10,7 +12,6 @@ $(document).ready(function(){
     e.preventDefault()
     var origin = $("#origin").val()
     var destination = $("#destination").val()
-    console.log('hitting this spot')
     if (origin == null || origin == "") {
       var message = "Ooops...please enter a start point"
         document.getElementById("alert").innerHTML = message;
@@ -26,8 +27,31 @@ $(document).ready(function(){
       }
   })
 
+  $('#requestRide').click(function(e) {
+    e.preventDefault()
+    request
+    .get('/liftConfirm')
+    .send({origin: origin})
+    .end(function(err, res) {
+      var data = res.body
+      $('body').html(liftConfirm({origin: res.body.origin, destination: res.body.destination,
+            date: res.body.departureDate, time: res.body.departureTime, listingID: res.body.listingID}))
+      })
+  })
+
+  $('.rideConfirm').click(function(e) {
+    e.preventDefault()
+    var listingID = e.target.id
+    var description = $('#description').val()
+    request
+      .post('/liftEnjoy')
+      .send({listingID: listingID, description: description })
+      .end(function (err, res) {
+        $('body').html(liftEnjoy())
+      })
+  })
+
   $("#commentSubmit").click(function(e){
-    console.log('yea')
     e.preventDefault()
     var comment = $('#commentReply').val()
     var listingID = $('#listingID').val()

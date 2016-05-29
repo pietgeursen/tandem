@@ -27,7 +27,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 function validateForm() {
-  console.log('...boom')
     var x = document.forms["searchForm"]["origin"].value;
     if (x == null || x == "") {
       var message = "Ooops...please enter a start point"
@@ -36,33 +35,34 @@ function validateForm() {
     }
 }
 
+function search(o, d){
+  var searchObject = {origin: o}
+  if(d){
+    searchObject.destination = d
+  }
 
-function search(origin, destination){
-  return knex('listings')
-  .where({origin: origin, destination: destination})
-  .innerJoin('users', 'listings.userID', '=', 'users.userID')
+  return knex('listings').where(searchObject).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
+
+function singleListing(listingID){
+  return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+}
 app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
 
-
 app.get('/currentListings', function(req, res){
-  // results of querys in url come into the query object
   search(req.query.origin, req.query.destination)
   .then(function(data){
-    res.render('./currentListings/currentListings', {layout: '_layout', listing: data})
+    res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
   })
 })
 
 app.get('/signup', function (req, res) {
-  res.render('register', {layout: '_layout'})
+  res.render('login')
 })
 
-app.get('/signin', function (req, res) {
-  res.render('login', {layout: '_layout'})
-})
 
 //============Create a Listing================
 
@@ -86,24 +86,15 @@ app.post('/createListing', function (req, res) {
 app.get('/singleListing', function(req, res){
   knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
   .then(function(data){
-    res.render('singleListing',{ layout: _layout, data: data })
+  console.log('data: ', data)
+    res.render('singleListing',{ data: data })
     // { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' }
   })
 })
 
 //=============== POST Routes ================
 
-
-
-app.post('/currentListings', function(req, res) {
-  var fromMain = req.body.origin
-  console.log("fromMain:", fromMain)
-  search(req.body.origin)
-})
-
-app.post('/main', function(req, res) { //============working here
-
-console.log(req.body)
+app.post('/main', function(req, res) {
   var originFromMain = req.body.origin
   var destinationFromMain = req.body.destination
   search(originFromMain, destinationFromMain)
@@ -131,11 +122,9 @@ app.post('/createListing', function (req, res) {
 })
 
 app.post('/singleListing', function(req, res) {
-  console.log('req.body: ', req.body)
   singleListing(req.body.listingID)
   .then(function(data) {
     res.json(data)
-
   })
 })
 
@@ -173,7 +162,6 @@ app.post('/liftEnjoy', function(req, res) {
 app.post('/singleListing', function(req, res){
   var comment = req.body.comment
   var listingID = req.body.listingID
-  console.log('req.body.listingID', req.body.listingID)
   knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
   .then(function(data){
     res.json(req.body)

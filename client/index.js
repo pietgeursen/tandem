@@ -57,7 +57,6 @@ $(document).ready(function(){
       .post('/commentOnListing')
       .send({ comment: comment, listingID: listingID })
       .end(function(err, res){
-        // console.log('res: ', res)
         var data = res.body
         $('#appendedComments').append(listingComment({comment: data.comment, listingID: data.listingID}))
         $('#commentReply').val('')
@@ -66,17 +65,14 @@ $(document).ready(function(){
 
   $(".seeMore").click(function(e){
     e.preventDefault()
+    console.log("has SeeMore button been clicked")
     var listingID = e.target.id
-    console.log("listingID :", listingID)
     request
     .post('/singleListing' )
       .send({ listingID: listingID })
       .end(function(err, res){
-        // console.log('res: ', res)
         var listingIDfromServer = res.body
-        // console.log('listingIDfromServer: ', listingIDfromServer)
         $('#newRides').html(singleListing({ data : listingIDfromServer }))
     })
   })
-
 }) // close doc ready

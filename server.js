@@ -17,7 +17,7 @@ var knex = Knex(knexConfig[env]);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(require('cookie-parser')());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }))
@@ -27,18 +27,20 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 
-function search(origin){
-  return knex('listings').where({origin: origin}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+function search(origin, destination){
+  return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
 app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
 
-app.get('/currentListings/:origin', function(req, res){
-  search(req.params.origin)
+app.get('/currentListings', function(req, res){
+  // results of querys in url come into the query object
+  console.log(req.query)
+  search(req.query.origin, req.query.destination)
   .then(function(data){
-    res.render('./currentListings/currentListings', {listing: data})
+    res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
   })
 })
 
@@ -68,25 +70,47 @@ app.post('/createListing', function (req, res) {
 //=============== POST Routes ================
 
 
+
 app.post('/currentListings', function(req, res) {
   var fromMain = req.body.origin
   console.log("fromMain:", fromMain)
   search(req.body.origin)
+
+app.post('/main', function(req, res) { //============working here
+  var originFromMain = req.body.origin
+  var destinationFromMain = req.body.destination
+  search(originFromMain, destinationFromMain)
+>>>>>>> db8850cbb97df7e954c2eec1b393cc1b4eaf7909
   .then(function(data) {
-    res.redirect('/currentListings/'+fromMain)
+    res.redirect('/currentListings?origin=' + originFromMain + '&destination='  + destinationFromMain)
   })
 })
+
 
 // '2' in knex query will eventually be replaced with something like req.body.userID..
 app.get('/singleListing', function(req, res){
   knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
   .then(function(data){
     res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
+
+app.post('/createListing', function (req, res) {
+  res.render('createListing')
+  knex('listings').insert(req.body)
+  .then(function (data) {
+  })
+  .catch(function (error) {
+  })
+})
+
+app.post('/singleListing', function(req, res) {
+  singleListing(req.body.listingID)
+  .then(function(data) {
+    res.json(data)
   })
 })
 
 app.post('/moreCurrentListings', function(req, res) {
-  search(req.body.origin)
+  search(req.body.origin, req.body.destination)
   .then(function(data) {
     res.json(data)
   })
@@ -125,12 +149,12 @@ app.post('/singleListing', function(req, res){
   })
 })
 
+
 // commenterID comes from session? params?
 // { commenterID: req.body.commenterID }
 
 // knex.select('comment', 'listingID').from('comments')
 // will this re-render whole page? with all data from 'get /singleListing' route?
-
 
 //===================Authorisation Code===================
 

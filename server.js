@@ -47,6 +47,13 @@ app.get('/signup', function (req, res) {
   res.render('login')
 })
 
+// '2' in knex query will eventually be replaced with something like req.body.userID..
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
+  .then(function(data){
+    res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
+  })
+})
 
 //=============== POST Routes ================
 
@@ -60,14 +67,6 @@ app.post('/currentListings', function(req, res) {
   })
 })
 
-// '2' in knex query will eventually be replaced with something like req.body.userID..
-app.get('/singleListing', function(req, res){
-  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
-  .then(function(data){
-    res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
-  })
-})
-
 app.post('/moreCurrentListings', function(req, res) {
   search(req.body.origin)
   .then(function(data) {
@@ -78,6 +77,8 @@ app.post('/moreCurrentListings', function(req, res) {
 app.post('/singleListing', function(req, res){
   var comment = req.body.comment
   var listingID = req.body.listingID
+  console.log('listingID:', listingID)
+  console.log('comment:',comment)
   knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
   .then(function(data){
     res.json(req.body)

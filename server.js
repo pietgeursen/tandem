@@ -36,8 +36,13 @@ app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
 
-app.get('/currentListings/:origin', function(req, res){
-  search(req.params.origin)
+// app.get('/currentListings/:origin', function(req, res){
+//   search(req.params.origin)
+
+app.get('/currentListings', function(req, res){
+  // results of querys in url come into the query object
+  // console.log(req.query)
+  search(req.query.origin, req.query.destination)
   .then(function(data){
     res.render('./currentListings/currentListings', {listing: data})
   })
@@ -47,11 +52,41 @@ app.get('/signup', function (req, res) {
   res.render('login')
 })
 
-// '2' in knex query will eventually be replaced with something like req.body.userID..
+app.get('/createListing', function (req, res) {
+  res.render('createListing')
+})
+
+// '2' in knex query will eventually be replaced with something like req.body.listingID..
 app.get('/singleListing', function(req, res){
-  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
   .then(function(data){
-    res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
+  // console.log('data: ', data)
+    res.render('singleListing',{ layout: _layout, data: data })
+    // { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' }
+  })
+})
+
+//=============== POST Routes ================
+
+
+app.post('/main', function(req, res) { //============working here
+  var originFromMain = req.body.origin
+  var destinationFromMain = req.body.destination
+  search(originFromMain, destinationFromMain)
+  .then(function(data) {
+    res.redirect('/currentListings?origin=' + originFromMain + '&destination='  + destinationFromMain)
+  })
+})
+
+app.post('/createListing', function (req, res) {
+  res.render('createListing')
+  console.log("this should be data from the form: ", req.body)
+  knex('listings').insert(req.body)
+  .then(function (data) {
+    console.log("data: ", data)
+  })
+  .catch(function (error) {
+    console.log("catch error: ", error)
   })
 })
 
@@ -67,6 +102,14 @@ app.post('/currentListings', function(req, res) {
   })
 })
 
+// '2' in knex query will eventually be replaced with something like req.body.userID..
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
+  .then(function(data){
+    res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
+  })
+})
+
 app.post('/moreCurrentListings', function(req, res) {
   search(req.body.origin)
   .then(function(data) {
@@ -77,8 +120,7 @@ app.post('/moreCurrentListings', function(req, res) {
 app.post('/singleListing', function(req, res){
   var comment = req.body.comment
   var listingID = req.body.listingID
-  console.log('listingID:', listingID)
-  console.log('comment:',comment)
+  console.log('req.body.listingID', req.body.listingID)
   knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
   .then(function(data){
     res.json(req.body)
@@ -93,6 +135,7 @@ app.post('/singleListing', function(req, res){
 
 
 //===================Authorisation Code===================
+
 
 app.post('/signup', function (req, res) {
 var hash = bcrypt.hashSync( req.body.password)

@@ -3,8 +3,10 @@ var $ = require('jquery')
 var currentListings = require('../views/currentListings/_ridesListing.hbs')
 var singleListing = require('../views/singleListing.hbs')
 var listingComment = require('../views/listingComment.hbs')
+var liftConfirm = require('../views/liftConfirm.hbs')
 
 $(document).ready(function(){
+
   $("#searchButton").click(function(e) {
     e.preventDefault()
     var origin = $("#origin").val()
@@ -15,6 +17,20 @@ $(document).ready(function(){
       .end(function(err, res) {
         var newListing = res.body
         $('#newRides').html(currentListings({ listing: newListing }))
+      })
+  })
+
+  $('#requestRide').click(function(e) {
+    e.preventDefault()
+      console.log("I've been clicked!")
+    request
+    .get('/liftConfirm')
+    .send({origin: origin}) //this is getting sent to the server
+    .end(function(err, res) { //res comes back here and this is where you render it to page
+      var data = res.body
+      $('body').html(liftConfirm({origin: res.body.origin, departure: res.body.departure, date: res.body.departureDate, time: res.body.departureTime}))
+      $('')
+        console.log('logging res.body:', res.body)
       })
   })
 

@@ -96,10 +96,10 @@ app.post('/moreCurrentListings', function(req, res) {
 //===================Ride Confirmation====================
 
 app.get('/liftConfirm', function (req, res){
+  // console.log("req: ", req, "res: ", res)
   knex.select('origin', 'destination', 'departureDate', 'departureTime').from('listings')
     .then (function(data) {
-      console.log("data[0]: ", data[0])
-      res.render('liftConfirm', ({data: data[0] }) )
+      res.json(data[8])
     })
 })
 

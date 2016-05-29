@@ -15,7 +15,6 @@ $(document).ready(function(){
       .send({ origin: origin, destination: destination })
       .end(function(err, res) {
         var newListing = res.body
-        console.log("newListing :", newListing)
         $('#newRides').html(ridesListing({ listing: newListing }))
       })
   })
@@ -36,9 +35,8 @@ $(document).ready(function(){
 
   $(".seeMore").click(function(e){
     e.preventDefault()
-    console.log('am i being clicked')
+    console.log("has SeeMore button been clicked")
     var listingID = e.target.id
-    console.log("listingID :", listingID)
     request
     .post('/singleListing' )
       .send({ listingID: listingID })

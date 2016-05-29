@@ -28,12 +28,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 
-// function search(origin){  // working here =======
-//   return knex('listings').where({origin: origin}).innerJoin('users', 'listings.userID', '=', 'users.userID')
-// }
-
-function search(origin, destination){  // working here =======
-  console.log('this is destination:', destination)
+function search(origin, destination){
   return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
@@ -45,25 +40,13 @@ app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
 
-// app.get('/currentListings/:origin/:destination', function(req, res){// working here =====
-//   search(req.params.origin, req.params.destination)
-//   .then(function(data){
-//     console.log('req.params.origin', req.params.origin )
-//     console.log('req.params.destination', req.params.destination)
-//     res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
-//   })
-// })
-
-app.get('/currentListings', function(req, res){// working here =====
-  console.log('req.params: ', req.query)
-  res.send('hello')
-  // search()
-  // .then(function(data){
-  //   // console.log('then')
-  //   // console.log('req.params.origin', req.params.origin )
-  //   // console.log('req.params.destination', req.params.destination)
-  //   res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
-  // })
+app.get('/currentListings', function(req, res){
+  // results of querys in url come into the query object
+  console.log(req.query)
+  search(req.query.origin, req.query.destination)
+  .then(function(data){
+    res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
+  })
 })
 
 app.get('/signup', function (req, res) {
@@ -90,15 +73,11 @@ app.get('/singleListing', function(req, res){
 app.post('/main', function(req, res) { //============working here
   var originFromMain = req.body.origin
   var destinationFromMain = req.body.destination
-  console.log('originFromMain', originFromMain, 'destinationFromMain', destinationFromMain)
   search(originFromMain, destinationFromMain)
   .then(function(data) {
-  console.log('res', res)
-    res.redirect('/currentListings?origin=' + originFromMain )
+    res.redirect('/currentListings?origin=' + originFromMain + '&destination='  + destinationFromMain)
   })
 })
-  // /' + originFromMain +'/' +
-
 
 app.post('/createListing', function (req, res) {
   res.render('createListing')
@@ -117,7 +96,7 @@ app.post('/singleListing', function(req, res) {
 })
 
 app.post('/moreCurrentListings', function(req, res) {
-  search(req.body.origin)
+  search(req.body.origin, req.body.destination)
   .then(function(data) {
     res.json(data)
   })

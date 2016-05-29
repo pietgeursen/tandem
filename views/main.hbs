@@ -10,14 +10,16 @@
  </body>
   <h3>Enter your origin and destination</h3>
 <div>
-  <form action="/main/" method="post" class=search id="locations">
+  <form action="/main/" method="post" class=search id="locations" name="searchForm" onsubmit="return validateForm()">
     <input type="text" name="origin" id="origin" placeholder="origin">
     <input type="text" name="destination" id="destination" placeholder="destination">
     <button name="findButton" id="findButton">Find</button>
+    <p id="alert"></p>
     <!-- <a href="/currentListing"> -->
     </form>
 </div>
-<script src="../javascript/bundle.js"></script>
+<script src="../javascript/formValidation.js"></script>
+
 
 </body>
 </html>

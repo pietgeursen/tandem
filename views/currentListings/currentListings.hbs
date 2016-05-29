@@ -1,9 +1,10 @@
 <div>
-  <section class=search id="locations">
+  <form class=search id="locations" name="searchForm" onsubmit="return validateForm()">
     <input type="text" name="origin" id="origin" placeholder="origin">
     <input type="text" name="destiation" id="destination" placeholder="destination">
     <button name="searchButton" id="searchButton">Find</button>
-  </section>
+    <p id="alert"></p>
+  </form>
 </div>
 
 <section id="newRides">
@@ -25,5 +26,5 @@
       </div>
     {{/each}}
   </div>
-
 </section>
+<script src="/javascript/formValidation.js"></script>

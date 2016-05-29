@@ -45,9 +45,6 @@ function search(o, d){
   return knex('listings').where(searchObject).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
-// function search(origin, destination){
-//   return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
-// }
 
 function singleListing(listingID){
   return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
@@ -65,20 +62,24 @@ app.get('/currentListings', function(req, res){
 })
 
 app.get('/signup', function (req, res) {
-  res.render('login')
+  res.render('register', {layout: '_layout'})
+})
+
+app.get('/signin', function (req, res) {
+  res.render('login', {layout: '_layout'})
 })
 
 app.get('/createListing', function (req, res) {
   res.render('createListing')
 })
 
-// '2' in knex query will eventually be replaced with something like req.body.listingID..
+
 app.get('/singleListing', function(req, res){
   knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
   .then(function(data){
   console.log('data: ', data)
     res.render('singleListing',{ data: data })
-    // { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' }
+
   })
 })
 
@@ -133,13 +134,10 @@ app.post('/signup', function (req, res) {
 var hash = bcrypt.hashSync( req.body.password)
  knex('users').insert({ email: req.body.email, hashedPassword: hash })
     .then(function(data){
-        //create sessions
-        // req.session.userId = data[0]
         res.redirect('currentListings')
     })
     .catch(function(error){
        console.log("error:", error)
-        // req.session.userId = 0
         res.redirect('/')
     })
 })
@@ -165,7 +163,6 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function (req, res) {
     console.log('req.user', req.user)
-    // req.session.user = req.user
     res.render('currentListings')
 })
 

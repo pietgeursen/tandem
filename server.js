@@ -28,7 +28,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 function validateForm() {
-  console.log('...boom')
     var x = document.forms["searchForm"]["origin"].value;
     if (x == null || x == "") {
       var message = "Ooops...please enter a start point"
@@ -37,10 +36,18 @@ function validateForm() {
     }
 }
 
+function search(o, d){
+  var searchObject = {origin: o}
+  if(d){
+    searchObject.destination = d
+  }
 
-function search(origin, destination){
-  return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+  return knex('listings').where(searchObject).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
+
+// function search(origin, destination){
+//   return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+// }
 
 function singleListing(listingID){
   return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
@@ -51,7 +58,6 @@ app.get('/', function(req, res){
 })
 
 app.get('/currentListings', function(req, res){
-  // results of querys in url come into the query object
   search(req.query.origin, req.query.destination)
   .then(function(data){
     res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
@@ -77,7 +83,6 @@ app.get('/singleListing', function(req, res){
 })
 
 //=============== POST Routes ================
-
 
 app.post('/main', function(req, res) { //============working here
   var originFromMain = req.body.origin

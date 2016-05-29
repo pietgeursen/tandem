@@ -1,7 +1,7 @@
 <div>
   <form class=search id="locations" name="searchForm" onsubmit="return validateForm()">
     <input type="text" name="origin" id="origin" placeholder="origin">
-    <input type="text" name="destiation" id="destination" placeholder="destination">
+    <input type="text" name="destination" id="destination" placeholder="destination">
     <button name="searchButton" id="searchButton">Find</button>
     <p id="alert"></p>
   </form>
@@ -21,7 +21,7 @@
         <p>{{this.listingID}} - this is the listingID</p>
         <p>{{this.name}}</p>
         <a href="#" id="{{this.listingID}}" class="seeMore">See more</a>
-  
+
       </div>
     {{/each}}
   </div>

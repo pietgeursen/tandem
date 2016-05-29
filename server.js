@@ -17,7 +17,7 @@ var knex = Knex(knexConfig[env]);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(require('cookie-parser')());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }))
@@ -28,8 +28,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 
-function search(origin){
-  return knex('listings').where({origin: origin}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+function search(origin, destination){
+  return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
 function singleListing(listingID){
@@ -40,10 +40,12 @@ app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
 
-app.get('/currentListings/:origin', function(req, res){
-  search(req.params.origin)
+app.get('/currentListings', function(req, res){
+  // results of querys in url come into the query object
+  console.log(req.query)
+  search(req.query.origin, req.query.destination)
   .then(function(data){
-    res.render('./currentListings/currentListings', {listing: data})
+    res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
   })
 })
 
@@ -65,30 +67,24 @@ app.get('/singleListing', function(req, res){
   })
 })
 
-// commenterID comes from session? params?
-// { commenterID: req.body.commenterID }
-
-
 //=============== POST Routes ================
 
 
-app.post('/currentListings', function(req, res) {
-  var fromMain = req.body.origin
-  search(req.body.origin)
+app.post('/main', function(req, res) { //============working here
+  var originFromMain = req.body.origin
+  var destinationFromMain = req.body.destination
+  search(originFromMain, destinationFromMain)
   .then(function(data) {
-    res.redirect('/currentListings/'+fromMain)
+    res.redirect('/currentListings?origin=' + originFromMain + '&destination='  + destinationFromMain)
   })
 })
 
 app.post('/createListing', function (req, res) {
   res.render('createListing')
-  console.log("this should be data from the form: ", req.body)
   knex('listings').insert(req.body)
   .then(function (data) {
-    console.log("data: ", data)
   })
   .catch(function (error) {
-    console.log("catch error: ", error)
   })
 })
 
@@ -100,7 +96,7 @@ app.post('/singleListing', function(req, res) {
 })
 
 app.post('/moreCurrentListings', function(req, res) {
-  search(req.body.origin)
+  search(req.body.origin, req.body.destination)
   .then(function(data) {
     res.json(data)
   })
@@ -114,17 +110,6 @@ app.post('/commentOnListing', function(req, res){
     res.json(req.body)
   })
 })
-
-// app.post('/singleListing', function(req, res){
-//  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
-//  .then(function(data){
-//    console.log('data: ', data)
-//  })
-//  .then(function(data){
-//    res.render('listingComment', { layout : 'singleListing' })
-//  })
-// })
-
 
 
 //===================Authorisation Code===================

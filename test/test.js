@@ -18,16 +18,15 @@ test('posting on homepage redirects to currentListings + origin', function(t) {
   .post('/main')
   .send( data )
   .end(function(err, res) {
-    console.log(res.status)
     t.equal(res.status, 302, 'http status is 302 (redirect)')
     t.end()
   })
 })
 
 test('if no origin or destination is provided by user, error message appears', function(t) {
-  var noSearchQuery = { origin: "" }
+  var noSearchQuery = { origin: "", destination: "" }
   request(app)
-  .post('/')
+  .post('/main')
   .send(noSearchQuery)
   .end(function(err, res) {
     $ = cheerio.load(res.text)

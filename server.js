@@ -81,6 +81,8 @@ app.post('/createListing', function (req, res) {
   })
   .catch(function (error) {
     console.log("catch error: ", error)
+  })
+})
 
 // '2' in knex query will eventually be replaced with something like req.body.listingID..
 app.get('/singleListing', function(req, res){

@@ -48,8 +48,13 @@ app.get('/currentListings/:origin', function(req, res){
 })
 
 app.get('/signup', function (req, res) {
+  res.render('register', {layout: '_layout'})
+})
+
+app.get('/signin', function (req, res) {
   res.render('login', {layout: '_layout'})
 })
+
 
 app.get('/createListing', function (req, res) {
   res.render('createListing')

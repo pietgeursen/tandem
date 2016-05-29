@@ -22,7 +22,6 @@ $(document).ready(function(){
 
   $('#requestRide').click(function(e) {
     e.preventDefault()
-      console.log("I've been clicked!")
     request
     .get('/liftConfirm')
     .send({origin: origin}) //this is getting sent to the server
@@ -32,6 +31,13 @@ $(document).ready(function(){
       $('')
         console.log('logging res.body:', res.body)
       })
+  })
+
+  $('#passengerConfirmButton').click(function(e) {
+    e.preventDefault()
+    console.log('confirmation clicked!')
+    request
+      .get()
   })
 
   $("#commentSubmit").click(function(e){

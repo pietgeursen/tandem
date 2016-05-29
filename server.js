@@ -103,6 +103,10 @@ app.get('/liftConfirm', function (req, res){
     })
 })
 
+app.get('/liftEnjoy', function(req. res) {
+  knex.insert
+})
+
 //===================Authorisation Code===================
 
 app.post('/singleListing', function(req, res){

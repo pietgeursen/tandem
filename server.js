@@ -37,6 +37,7 @@ function singleListing(listingID){
 }
 
 app.get('/', function(req, res){
+  console.log('res.render: ', res.render)
   res.render('main', { layout: '_layout' })
 })
 

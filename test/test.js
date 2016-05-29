@@ -13,12 +13,25 @@ test('visiting homepage takes user to correct view', function(t){
 })
 
 test('posting on homepage redirects to currentListings + origin', function(t) {
-  var origin = { origin: 'Kaeo' }
+  var data = { origin: 'Kaeo', destination: 'Wellington' }
   request(app)
-  .post('/currentListings')
-  .send( origin )
+  .post('/main')
+  .send( data )
   .end(function(err, res) {
+    console.log(res.status)
     t.equal(res.status, 302, 'http status is 302 (redirect)')
     t.end()
   })
-} )
+})
+
+test('if no origin or destination is provided by user, error message appears', function(t) {
+  var noSearchQuery = { origin: "" }
+  request(app)
+  .post('/')
+  .send(noSearchQuery)
+  .end(function(err, res) {
+    $ = cheerio.load(res.text)
+    t.equal($('p').text(), "Ooops...please enter a start point", "error text appended to page" )
+    t.end()
+  })
+})

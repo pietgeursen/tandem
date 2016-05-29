@@ -42,7 +42,7 @@ app.get('/', function(req, res){
 
 app.get('/currentListings', function(req, res){
   // results of querys in url come into the query object
-  console.log(req.query)
+  // console.log(req.query)
   search(req.query.origin, req.query.destination)
   .then(function(data){
     res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
@@ -61,7 +61,7 @@ app.get('/createListing', function (req, res) {
 app.get('/singleListing', function(req, res){
   knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
   .then(function(data){
-  console.log('data: ', data)
+  // console.log('data: ', data)
     res.render('singleListing',{ data: data })
     // { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' }
   })

@@ -27,6 +27,7 @@ $(document).ready(function(){
   })
 
   $("#commentSubmit").click(function(e){
+    console.log('yea')
     e.preventDefault()
     var comment = $('#commentReply').val()
     var listingID = $('#listingID').val()
@@ -39,6 +40,7 @@ $(document).ready(function(){
         $('#commentReply').val('')
       })
   })
+
 
   $(".seeMore").click(function(e){
     e.preventDefault()

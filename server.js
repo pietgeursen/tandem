@@ -84,7 +84,7 @@ app.get('/singleListing', function(req, res){
 
 //=============== POST Routes ================
 
-app.post('/main', function(req, res) { //============working here
+app.post('/main', function(req, res) {
   var originFromMain = req.body.origin
   var destinationFromMain = req.body.destination
   search(originFromMain, destinationFromMain)

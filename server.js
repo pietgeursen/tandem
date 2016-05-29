@@ -1,7 +1,3 @@
-var express = require('express')
-var app = express()
-var bodyParser = require('body-parser')
-var path = require('path')
 var bcrypt = require('bcrypt-node')
 var Knex = require('knex')
 var passport = require('passport')
@@ -104,7 +100,7 @@ app.get('/liftConfirm', function (req, res){
 })
 
 app.get('/liftEnjoy', function(req. res) {
-  knex.insert
+
 })
 
 //===================Authorisation Code===================

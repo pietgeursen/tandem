@@ -37,7 +37,6 @@ function singleListing(listingID){
 }
 
 app.get('/', function(req, res){
-  console.log('res.render: ', res.render)
   res.render('main', { layout: '_layout' })
 })
 
@@ -210,3 +209,5 @@ passport.deserializeUser(function(obj, callback) {
 app.listen(3000, function () {
   console.log('catching a lift on 3000!')
 })
+
+module.exports = app;

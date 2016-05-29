@@ -1,39 +1,31 @@
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Tandem</title>
-    <link type="text/css" rel="stylesheet" href="../styles/index.css">
-  </head>
-  <body>
-    <div>
-      <section class=search id="locations">
-        <input type="text" name="origin" id="origin" placeholder="origin">
-        <input type="text" name="destiation" id="destination" placeholder="destination">
-        <button name="searchButton" id="searchButton">Find</button>
-      </section>
-    </div>
+<div>
+  <form class=search id="locations" name="searchForm" onsubmit="return validateForm()">
+    <input type="text" name="origin" id="origin" placeholder="origin">
+    <input type="text" name="destiation" id="destination" placeholder="destination">
+    <button name="searchButton" id="searchButton">Find</button>
+    <p id="alert"></p>
+  </form>
+</div>
 
-    <section id="newRides">
+<section id="newRides">
 
-      <div class="numberOfRides">
-        <h2>{{numberOfRides}} rides from {{origin}} to {{destination}}</h2>
+  <div class="numberOfRides">
+    <h2>{{numberOfRides}} rides from {{origin}} to {{destination}}</h2>
+  </div>
+
+  <div class="container">
+    {{#each listing}}
+      <div class="listing">
+        <h3>{{this.dateTime}} - {{this.time}}</h3>
+        <h4>{{this.origin}} - {{this.destination}}</h4>
+        <p>{{this.listingID}} - this is the listingID</p>
+        <p>{{this.name}}</p>
+        <a href="#" id="{{this.listingID}}" class="seeMore">See more</a>
+        <br><h3>this is currentListings.hbs</h3>
+        ---------------------------------
       </div>
-
-      <div class="container">
-        {{#each listing}}
-          <div class="listing">
-            <h3><i>(date and time field)</i> {{this.dateTime}} - {{this.time}}</h3>
-            <h4>{{this.origin}} - {{this.destination}}</h4>
-            <p>{{this.name}}</p>
-            <br>
-            ---------------------------------
-          </div>
-        {{/each}}
-      </div>
-
-    </section>
-
-<script src="../javascript/bundle.js"></script>
-
-  </body>
-</html>
+    {{/each}}
+  </div>
+</section>
+<script src="/javascript/formValidation.js"></script>
+<script src="/javascript/bundle.js"></script>

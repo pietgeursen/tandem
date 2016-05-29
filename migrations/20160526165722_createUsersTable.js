@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
   table.string('email');
   table.string('hashedPassword');
   table.string('gender');
-  table.string('aboutMe');
+  table.string('aboutMe',[500]);
   table.string('photo');
   table.integer('driverLicenceDuration');
   table.integer('age');

@@ -19,6 +19,7 @@ $(document).ready(function(){
   })
 
   $("#commentSubmit").click(function(e){
+    console.log('yea')
     e.preventDefault()
     var comment = $('#commentReply').val()
     var listingID = $('#listingID').val()
@@ -30,6 +31,20 @@ $(document).ready(function(){
         $('#appendedComments').append(listingComment({comment: data.comment, listingID: data.listingID}))
         $('#commentReply').val('')
       })
+  })
+
+
+  $(".seeMore").click(function(e){
+    e.preventDefault()
+    // console.log("has SeeMore button been clicked")
+    var listingID = e.target.id
+    request
+    .post('/singleListing' )
+      .send({ listingID: listingID })
+      .end(function(err, res){
+        var listingIDfromServer = res.body
+        $('#newRides').html(singleListing({ data : listingIDfromServer }))
+    })
   })
 
 }) // close doc ready

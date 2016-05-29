@@ -36,6 +36,7 @@ $(document).ready(function(){
 
   $(".seeMore").click(function(e){
     e.preventDefault()
+    console.log('am i being clicked')
     var listingID = e.target.id
     console.log("listingID :", listingID)
     request

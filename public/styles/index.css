@@ -1,3 +1,186 @@
-body {
-  background-color: pink !important;
+@font-face {
+    font-family: Gotham_black;
+    src: url(../fonts/GOTHAM-BLACK.TTF);
 }
+@font-face {
+    font-family: Gotham_medium;
+    src: url(../fonts/GOTHAM-MEDIUM.TTF);
+}
+@font-face {
+    font-family: Gotham_thin;
+    src: url(../fonts/GOTHAM-LIGHT.TTF);
+}
+
+h1, h2, h3, h4, h5 {
+	color: #fff;
+}
+h2 {
+	font-family: Gotham_medium;
+}
+
+/*this is a temp rule*/
+button {
+	color: #fff;
+}
+
+body {
+  background: #3b5998;
+  font-family: Gotham_thin;
+}
+
+/* --------------------- Forms ---------------------*/
+.inputFullWidth, #facebookButton {
+	width: 320px;
+	margin: 10px;
+}
+#facebookButton {
+	border-radius: 4px;
+	background: #23355b;
+	height: 38px;
+	margin: 0 auto;
+}
+
+#facebookButton a{
+	text-decoration: none;
+	color: #fff;
+	line-height: 38px;
+}
+
+#signUpButton {
+	color: #fff;
+	background: #355088;
+	border: none;
+}
+
+#signUpButton:hover {
+	background: #4e69a2;
+}
+
+/* --------------------- Signin page ---------------------*/
+
+/*.signInContainer {
+	background: #c4cde0;
+	width: 350px;
+	height: 400x;
+	padding-right: 20px;
+
+	border-radius: 4px;
+	margin: 0 auto;
+}*/
+
+#signUp {
+	margin-top: 10px;
+	color: #fff;
+} 
+
+
+/* --------------------- Header ---------------------*/
+
+#logo {
+	font-family: Gotham_black;
+	font-size: 2em;
+	padding: 20px;
+	line-height: 50px;
+	/*text-align: center;*/
+
+}
+#logo a {
+	text-decoration: none;
+	color: #fff;
+}
+.main-navigation {
+	background: #2f4779;
+}
+/* navigaton */
+/*
+	nav {
+		width: 100%;
+		text-align: center;
+	}
+	nav ul {
+		line-height: 40px;
+		width: 100%;
+		float: none;
+	}
+	nav ul li {
+		display: block;
+		list-style: none;
+		background: #758ab6;
+		margin-bottom: 1px;
+	}
+	nav ul li a {
+		text-decoration: none;
+		padding: 5px;
+		color: #fff;
+
+	}
+	nav ul li a:hover {}*/
+	
+
+/* Larger than mobile */
+@media (min-width: 400px) {
+		
+}
+/* Larger than phablet (also point when grid becomes active) */
+@media (min-width: 550px) {}
+
+/* Larger than tablet */
+@media (min-width: 750px) {
+	#logo {
+		float: left;
+	}
+	nav {
+		width: 100%;
+		text-align: center;
+	}
+	nav ul {
+		float: right;
+		line-height: 50px;
+	}
+	nav ul li {
+		display: inline;
+		list-style: none;
+	}
+	nav ul li a {
+		text-decoration: none;
+		padding: 10px;
+		color: #fff;
+	}
+	nav ul li a:hover {}
+	
+
+
+	}
+
+/* Larger than desktop */
+@media (min-width: 1000px) {}
+
+/* Larger than Desktop HD */
+@media (min-width: 1200px) {
+
+}
+
+
+/*#signUpButton {
+	border-radius: 25px;
+	border: 1px solid #fff;
+	width: 100px;
+	text-align: center;
+}*/
+
+.centerContent {
+	text-align: center;
+}
+#findButton {
+	border-radius: 25px;
+	border: 1px solid #fff;
+	width: 120px;
+	text-align: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+
+

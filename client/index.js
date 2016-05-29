@@ -10,16 +10,24 @@ $(document).ready(function(){
     e.preventDefault()
     var origin = $("#origin").val()
     var destination = $("#destination").val()
-    request
-      .post('/moreCurrentListings')
-      .send({ origin: origin, destination: destination })
-      .end(function(err, res) {
-        var newListing = res.body
-        $('#newRides').html(ridesListing({ listing: newListing }))
-      })
+    console.log('hitting this spot')
+    if (origin == null || origin == "") {
+      var message = "Ooops...please enter a start point"
+        document.getElementById("alert").innerHTML = message;
+        return false;
+      }else{
+          request
+            .post('/moreCurrentListings')
+            .send({ origin: origin, destination: destination })
+            .end(function(err, res) {
+              var newListing = res.body
+              $('#newRides').html(ridesListing({ listing: newListing }))
+          })
+      }
   })
 
   $("#commentSubmit").click(function(e){
+    console.log('yea')
     e.preventDefault()
     var comment = $('#commentReply').val()
     var listingID = $('#listingID').val()
@@ -33,9 +41,9 @@ $(document).ready(function(){
       })
   })
 
+
   $(".seeMore").click(function(e){
     e.preventDefault()
-    console.log("has SeeMore button been clicked")
     var listingID = e.target.id
     request
     .post('/singleListing' )

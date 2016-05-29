@@ -27,10 +27,27 @@ dotenv.load()
 app.use(passport.initialize())
 app.use(passport.session())
 
-
-function search(origin, destination){
-  return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+function validateForm() {
+    var x = document.forms["searchForm"]["origin"].value;
+    if (x == null || x == "") {
+      var message = "Ooops...please enter a start point"
+        document.getElementById("alert").innerHTML = message;
+        return false
+    }
 }
+
+function search(o, d){
+  var searchObject = {origin: o}
+  if(d){
+    searchObject.destination = d
+  }
+
+  return knex('listings').where(searchObject).innerJoin('users', 'listings.userID', '=', 'users.userID')
+}
+
+// function search(origin, destination){
+//   return knex('listings').where({origin: origin, destination: destination}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+// }
 
 function singleListing(listingID){
   return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
@@ -41,8 +58,6 @@ app.get('/', function(req, res){
 })
 
 app.get('/currentListings', function(req, res){
-  // results of querys in url come into the query object
-  console.log(req.query)
   search(req.query.origin, req.query.destination)
   .then(function(data){
     res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
@@ -69,8 +84,7 @@ app.get('/singleListing', function(req, res){
 
 //=============== POST Routes ================
 
-
-app.post('/main', function(req, res) { //============working here
+app.post('/main', function(req, res) {
   var originFromMain = req.body.origin
   var destinationFromMain = req.body.destination
   search(originFromMain, destinationFromMain)
@@ -81,7 +95,7 @@ app.post('/main', function(req, res) { //============working here
 
 app.post('/createListing', function (req, res) {
   res.render('createListing')
-  knex('listings').insert(req.body)
+    knex('listings').insert(req.body)
   .then(function (data) {
   })
   .catch(function (error) {

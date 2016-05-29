@@ -4,7 +4,8 @@
     <br>
     <h4>{{this.origin}} - {{this.destination}}</h4>
     <p><strong>Driver:</strong></p><p>{{this.name}}</p>
-    <h3><i>(date and time field)</i> {{this.dateTime}} - {{this.time}}</h3>
+
+    <p><strong>Date: </strong></p><p>{{this.dateTime}}{{this.time}}</p>
     <p>{{this.gender}}</p>
     <p>{{this.age}}</p>
     <p>I've held my driver's licence for {{this.driverLicenceDuration}} years</p>
@@ -13,17 +14,19 @@
     <p>{{this.description}}
 
   {{/each}}
+
 </div>
+
 
 <div class="commentContainer">
   <div id="appendedComments"></div>
 
-
-  <form action="/singleListing" class="" method="post">
+  <form action="/commentOnListing" class="" method="post">
     <textarea id="commentReply" name="comment" rows="8" cols="40"></textarea>
     <input id="listingID" type="hidden" name="listingID" value="{{listingID}}">
     <input type="submit" name="name" value="comment" id="commentSubmit">
   </form>
+
   <div class="">
     {{{listingComment}}}
   </div>

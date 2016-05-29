@@ -57,6 +57,7 @@ app.post('/createListing', function (req, res) {
   console.log("this should be data from the form: ", req.body)
   knex('listings').insert(req.body)
   .then(function (data) {
+    res.render('listingConfirm')
     console.log("data: ", data)
   })
   .catch(function (error) {
@@ -107,6 +108,7 @@ app.post('/liftEnjoy', function(req, res) {
   var description = req.body.description
   var listingID = req.body.listingID
   knex('ride_requests').insert({listingID: listingID, description: description})
+  knex('listings').where({listingID: listingID}).update({ride_requested: true})
     .then (function(data){
       res.json(data)
     })

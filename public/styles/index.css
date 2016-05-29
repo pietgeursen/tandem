@@ -11,10 +11,20 @@
     src: url(../fonts/GOTHAM-LIGHT.TTF);
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6 {
 	color: #fff;
 }
-h2 {
+h5 {
+	font-family: Gotham_medium;
+}
+
+h1 {
+	font-family: Gotham_black;
+	font-size: 4em;
+	margin-bottom: 0;
+}
+
+h6 {
 	font-family: Gotham_medium;
 }
 
@@ -25,7 +35,12 @@ button {
 
 body {
   background: #3b5998;
-  font-family: Gotham_thin;
+/*  background: url(../images/bg002.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: Gotham_thin;*/
 }
 
 /* --------------------- Forms ---------------------*/
@@ -74,6 +89,8 @@ body {
 } 
 
 
+
+
 /* --------------------- Header ---------------------*/
 
 #logo {
@@ -88,11 +105,11 @@ body {
 	text-decoration: none;
 	color: #fff;
 }
-.main-navigation {
+.main-navigation nav{
 	background: #2f4779;
 }
 /* navigaton */
-/*
+
 	nav {
 		width: 100%;
 		text-align: center;
@@ -114,7 +131,7 @@ body {
 		color: #fff;
 
 	}
-	nav ul li a:hover {}*/
+
 	
 
 /* Larger than mobile */
@@ -131,34 +148,25 @@ body {
 	}
 	nav {
 		width: 100%;
-		text-align: center;
+		text-align: right;
 	}
 	nav ul {
 		float: right;
 		line-height: 50px;
+		width: 300px;
 	}
 	nav ul li {
 		display: inline;
 		list-style: none;
+		background: none;
 	}
 	nav ul li a {
 		text-decoration: none;
 		padding: 10px;
 		color: #fff;
-	}
-	nav ul li a:hover {}
-	
 
 
 	}
-
-/* Larger than desktop */
-@media (min-width: 1000px) {}
-
-/* Larger than Desktop HD */
-@media (min-width: 1200px) {
-
-}
 
 
 /*#signUpButton {
@@ -179,6 +187,9 @@ body {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	background: #095698;
+	border: none;
+
 
 }
 

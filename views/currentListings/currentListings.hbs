@@ -1,30 +1,33 @@
-<div>
-  <form class=search id="locations" name="searchForm" onsubmit="return validateForm()">
-    <input type="text" name="origin" id="origin" placeholder="origin">
-    <input type="text" name="destiation" id="destination" placeholder="destination">
-    <button name="searchButton" id="searchButton">Find</button>
-    <p id="alert"></p>
-  </form>
-</div>
-
-<section id="newRides">
-
-  <div class="numberOfRides">
-    <h2>{{numberOfRides}} rides from {{origin}} to {{destination}}</h2>
+<div class="centerContent container u-cf">
+  <div class="twelve columns">
+    <form class=search id="locations" name="searchForm" onsubmit="return validateForm()">
+      <input type="text" name="origin" id="origin" placeholder="origin">
+      <input type="text" name="destiation" id="destination" placeholder="destination">
+      <button name="searchButton" id="searchButton">Find</button>
+      <p id="alert"></p>
+    </form>
   </div>
 
-  <div class="container">
-    {{#each listing}}
-      <div class="listing">
-        <h3><i>(date and time field)</i> {{this.dateTime}} - {{this.time}}</h3>
-        <h4>{{this.origin}} - {{this.destination}}</h4>
-        <p>{{this.listingID}} - this is the listingID</p>
-        <p>{{this.name}}</p>
-        <a href="#" id="{{this.listingID}}" class="seeMore">See more</a>
-        <br><h3>this is currentListings.hbs</h3>
-        ---------------------------------
-      </div>
-    {{/each}}
+  <section id="newRides">
+
+    <div class="numberOfRides">
+      <h2>{{numberOfRides}} rides from {{origin}} to {{destination}}</h2>
+    </div>
+
+    <div class="container">
+      {{#each listing}}
+        <div class="listing">
+          <h3><i>(date and time field)</i> {{this.dateTime}} - {{this.time}}</h3>
+          <h4>{{this.origin}} - {{this.destination}}</h4>
+          <p>{{this.listingID}} - this is the listingID</p>
+          <p>{{this.name}}</p>
+          <a href="#" id="{{this.listingID}}" class="seeMore">See more</a>
+          <br><h3>this is currentListings.hbs</h3>
+          ---------------------------------
+        </div>
+      {{/each}}
+    </div>
+  </section>
+  <script src="/javascript/formValidation.js"></script>
   </div>
-</section>
-<script src="/javascript/formValidation.js"></script>
+</div> 

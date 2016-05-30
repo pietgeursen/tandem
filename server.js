@@ -158,7 +158,7 @@ var hash = bcrypt.hashSync( req.body.password)
     })
     .catch(function(error){
        console.log("error:", error)
-        res.redirect('/')
+        res.send('Error, please refresh the page and try again')
     })
 })
 
@@ -167,11 +167,12 @@ app.post ('/login', function(req,res) {
     .then (function(data){
       var hashedLogin = data[0].hashedPassword
       if  (bcrypt.compareSync(req.body.password, hashedLogin)) {
-        res.redirect('/currentListings/')
+        res.redirect('/currentListings')
       }
     })
     .catch (function (error) {
       console.log("error:", error)
+      res.sendStatus(403)
     })
 })
 

@@ -32,8 +32,8 @@ $(document).ready(function(){
     e.preventDefault()
     request
     .get('/liftConfirm')
-    .send({origin: origin}) //this is getting sent to the server
-    .end(function(err, res) { //res comes back here and this is where you render it to page
+    .send({origin: origin})
+    .end(function(err, res) {
       var data = res.body
       $('body').html(liftConfirm({origin: res.body.origin, destination: res.body.destination,
             date: res.body.departureDate, time: res.body.departureTime, listingID: res.body.listingID}))
@@ -50,9 +50,8 @@ $(document).ready(function(){
       .post('/liftEnjoy')
       .send({listingID: listingID, description: description })
       .end(function (err, res) {
-        console.log("error: ", err)
         console.log("hopefully there's some data in request Ride table!")
-        $('body').html(liftEnjoy())
+        $('body').html(liftEnjoy({name: "lizzie"}))
       })
   })
 

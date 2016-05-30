@@ -48,9 +48,6 @@ function search(origin, destination){
 //
 // }
 
-function singleListing(listingID){
-  return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
-}
 
 app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
@@ -74,10 +71,32 @@ app.get('/signin', function (req, res) {
 
 //============Create a Listing================
 
+
 app.get('/createListing', function (req, res) {
   res.render('createListing')
 })
 
+
+
+//=============== POST Routes ================
+
+app.post('/main', function(req, res) {
+  var originFromMain = req.body.origin
+  var destinationFromMain = req.body.destination
+  search(originFromMain, destinationFromMain)
+  .then(function(data) {
+    res.redirect('/currentListings?origin=' + originFromMain + '&destination='  + destinationFromMain)
+  })
+})
+
+app.post('/createListing', function (req, res) {
+  res.render('createListing')
+    knex('listings').insert(req.body)
+  .then(function (data) {
+  })
+  .catch(function (error) {
+  })
+})
 
 app.post('/createListing', function (req, res) {
   res.render('createListing')
@@ -91,58 +110,6 @@ app.post('/createListing', function (req, res) {
   })
 })
 
-app.get('/singleListing', function(req, res){
-  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
-  .then(function(data){
-    res.render('singleListing',{ data: data })
-  })
-})
-
-
-// // '2' in knex query will eventually be replaced with something like req.body.listingID..
-// app.get('/singleListing', function(req, res){
-//   knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
-//   .then(function(data){
-//   console.log('data: ', data)
-//     res.render('singleListing',{ data: data })
-//
-//   })
-// })
-
-//=============== POST Routes ================
-
-app.post('/main', function(req, res) {
-  var originFromMain = req.body.origin
-  var destinationFromMain = req.body.destination
-  search(originFromMain, destinationFromMain)
-  .then(function(data) {
-    res.redirect('/currentListings?origin=' + originFromMain + '&destination='  + destinationFromMain)
-  })
-})
-
-app.get('/singleListing', function(req, res){
-  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
-  .then(function(data){
-    res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
-  })
-})
-
-app.post('/createListing', function (req, res) {
-  res.render('createListing')
-    knex('listings').insert(req.body)
-  .then(function (data) {
-  })
-  .catch(function (error) {
-  })
-})
-
-app.post('/singleListing', function(req, res) {
-  singleListing(req.body.listingID)
-  .then(function(data) {
-    res.json(data)
-  })
-})
-
 app.post('/moreCurrentListings', function(req, res) {
   search(req.body.origin, req.body.destination)
   .then(function(data) {
@@ -150,9 +117,45 @@ app.post('/moreCurrentListings', function(req, res) {
   })
 })
 
-// app.post('/profile', function(req, res)
-//   profile
-// )
+//===== singleListing =======================
+
+// '2' in knex query will eventually be replaced with something like req.body.listingID..
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
+  .then(function(data){
+    console.log('data (inside get singleListing): ', data)
+    res.render('singleListing',{ data: data })
+  })
+})
+
+//     res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
+
+//========= post=====
+
+app.post('/commentOnListing', function(req, res){
+  var comment = req.body.comment
+  var listingID = req.body.listingID
+  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
+  .then(function(data){
+
+    // res.json(req.body)
+  })
+})
+
+// app.post('/commentOnListing', function(req, res){
+
+// })
+
+// function singleListing(listingID){
+//   return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
+// }
+
+// app.post('/singleListing', function(req, res) {
+//   singleListing(req.body.listingID)
+//   .then(function(data) {
+//     res.json(data)
+//   })
+// })
 
 //===================Ride Confirmation====================
 
@@ -173,16 +176,6 @@ app.post('/liftEnjoy', function(req, res) {
     })
 })
 
-//===================Authorisation Code===================
-
-app.post('/singleListing', function(req, res){
-  var comment = req.body.comment
-  var listingID = req.body.listingID
-  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
-  .then(function(data){
-    res.json(req.body)
-  })
-})
 
 //===================Authorisation Code===================
 

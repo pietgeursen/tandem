@@ -51,43 +51,6 @@ $(document).ready(function(){
       })
   })
 
-  // 1. pure serverside rendering - nice and simple
-    // take out ajax
-    // res.render hbs
-
-  // 2. initial render serverside
-    // POST Listing/id/comment
-    // GET listing/id data
-    // client side render listing with its comments
-
-  // 3. pure client-side
-
-
-  // its working but is it using form action (html5 forms)?
-  // what's happening with the ajax?
-
-  // server
-  // respond with the comment we just inserted
-
-  $("body").on("click", "#commentSubmit", function(){
-    var comment = $('#commentReply').val()
-    console.log('Im heerrre')
-    // debugger
-    // request
-    //   .post('/listings/' + listingID + '/comment')
-    //   .send({ comment: comment, listingID: listingID })
-    //   .end(function(err, res){
-    //     var data = res.body
-    //     console.log('res: ', res)
-    //     $('#appendedComments').append(listingComment({comment: data.comment, listingID: data.listingID}))
-    //     $('#commentReply').val('')
-    //   })
-  })
-  // .get('/singleListing')
-  // .end(function(err,res){
-
-
-
   $(".seeMore").click(function(e){
     e.preventDefault()
     var listingID = e.target.id
@@ -99,4 +62,39 @@ $(document).ready(function(){
       $('#newRides').html(singleListing({ data : listingIDfromServer }))
     })
   })
+
+  $("body").on("click", "#commentSubmit", function(e){
+    var comment = $('#commentReply').val()
+    var listingID = $(this).attr('data-listingID')
+    request
+      .post('/listings/' + listingID + '/comment')
+      .send({ comment: comment, listingID: listingID })
+      .end(function(err, res){
+        var data = res.body
+        console.log('data: ', data)
+        $('#appendedComments').append(listingComment({data: data}))
+        $('#commentReply').val('')
+      })
+  })
+
+  // 1. pure serverside rendering - nice and simple
+    // take out ajax
+    // res.render hbs
+
+  // 2. initial render serverside
+    // POST Listing/id/comment
+      // respond with all comments associetd with listing id
+      // respond with specific comment
+      //  sperately trigger a GET listing/id/comments
+    // client side render listing with its comments
+
+  // 3. pure client-side
+
+
+  // its working but is it using form action (html5 forms)?
+  // what's happening with the ajax?
+
+  // server
+  // respond with the comment we just inserted
+
 }) // close doc ready

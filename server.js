@@ -114,8 +114,9 @@ app.post('/createListing', function (req, res) {
 })
 
 // defs being used.. question about whether post or get..
-app.post('/singleListing', function(req, res) {
-  singleListing(req.body.listingID)
+app.get('/singleListing', function(req, res) {
+  console.log('req.query', req.query)
+  singleListing(req.query.listingID)
   .then(function(data) {
     res.json(data)
   })

@@ -60,10 +60,15 @@ $(document).ready(function(){
       .send({ comment: comment, listingID: listingID })
       .end(function(err, res){
         var data = res.body
+        console.log('res: ', res)
         $('#appendedComments').append(listingComment({comment: data.comment, listingID: data.listingID}))
         $('#commentReply').val('')
       })
   })
+  // .get('/singleListing')
+  // .end(function(err,res){
+
+
 
   $(".seeMore").click(function(e){
     e.preventDefault()
@@ -72,6 +77,7 @@ $(document).ready(function(){
     .get('/singleListing?listingID=' + listingID )
     .end(function(err, res){
       var listingIDfromServer = res.body
+      console.log(listingIDfromServer)
       $('#newRides').html(singleListing({ data : listingIDfromServer }))
     })
   })

@@ -26,21 +26,19 @@ dotenv.load()
 app.use(passport.initialize())
 app.use(passport.session())
 
-function validateForm() {
-    var x = document.forms["searchForm"]["origin"].value;
-    if (x == null || x == "") {
-      var message = "Ooops...please enter a start point"
-        document.getElementById("alert").innerHTML = message;
-        return false
-    }
-}
-
 function search(origin, destination){
   var searchObject = {origin: origin}
   if(destination){
     searchObject.destination = destination
   }
   return knex('listings').where(searchObject).innerJoin('users', 'listings.userID', '=', 'users.userID')
+}
+
+function displayListingUserCommentData (listingID){
+  return knex('listings').where({'listings.listingID': listingID}).
+    leftOuterJoin('comments', 'comments.listingID', '=', 'listings.listingID').
+    rightOuterJoin('users', 'users.userID', '=', 'listings.userID').
+    select('*')
 }
 
 app.get('/', function(req, res){
@@ -101,26 +99,35 @@ app.post('/createListing', function (req, res) {
 })
 
 app.get('/singleListing', function(req, res) {
-  displayListingUserCommentData(req.query.listingID)
+  var listingID = req.query.listingID
+  displayListingUserCommentData(listingID)
   .then(function(data) {
-    console.log('data from db: ', data)
+    // console.log('data from db: ', data)
+    data[0].listingID = listingID
     res.json(data)
   })
 })
 
-function displayListingUserCommentData (listingID){
-  return knex('listings').where({'listings.listingID': listingID}).leftOuterJoin('comments', 'comments.listingID', '=', 'listings.listingID').rightOuterJoin('users', 'users.userID', '=', 'listings.userID')
-  //
-}
 
-app.post('/commentOnListing', function(req, res){
+
+app.post('/listings/:id/comment', function(req, res){
   var comment = req.body.comment
-  var listingID = req.body.listingID
+  var listingID = req.params.id
+  console.log('listingID: ', listingID)
   knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
+  .then(function(){
+    knex.select('comment').from('comments')
+    // console.log('data (from commentOnListing db insert): ', data)
+  })
   .then(function(data){
-    res.json(req.body)
+    console.log('data in second then: ', data)
+    res.send(data)
   })
 })
+
+
+
+
 
 app.post('/moreCurrentListings', function(req, res) {
   search(req.body.origin, req.body.destination)

@@ -73,15 +73,10 @@ body {
 
 /* --------------------- Signin page ---------------------*/
 
-/*.signInContainer {
-	background: #c4cde0;
-	width: 350px;
-	height: 400x;
-	padding-right: 20px;
-
-	border-radius: 4px;
-	margin: 0 auto;
-}*/
+.signInContainer {
+	text-align: center;
+	margin-top: 25px;
+}
 
 #signUp {
 	margin-top: 10px;
@@ -95,9 +90,9 @@ body {
 
 #logo {
 	font-family: Gotham_black;
-	font-size: 2em;
-	padding: 20px;
+	font-size: 1.5em;
 	line-height: 50px;
+
 	/*text-align: center;*/
 
 }
@@ -108,7 +103,7 @@ body {
 .main-navigation nav{
 	background: #2f4779;
 }
-/* navigaton */
+/* navigaton mobile */
 
 	nav {
 		width: 100%;
@@ -126,55 +121,57 @@ body {
 		margin-bottom: 1px;
 	}
 	nav ul li a {
+		display: block;
 		text-decoration: none;
 		padding: 5px;
 		color: #fff;
 
 	}
 
-	
-
-/* Larger than mobile */
-@media (min-width: 400px) {
-		
-}
-/* Larger than phablet (also point when grid becomes active) */
-@media (min-width: 550px) {}
 
 /* Larger than tablet */
 @media (min-width: 750px) {
-	#logo {
-		float: left;
-	}
-	nav {
-		width: 100%;
-		text-align: right;
-	}
-	nav ul {
-		float: right;
-		line-height: 50px;
-		width: 300px;
-	}
-	nav ul li {
-		display: inline;
-		list-style: none;
-		background: none;
-	}
-	nav ul li a {
-		text-decoration: none;
-		padding: 10px;
-		color: #fff;
+
+.signInContainer {
+	margin-top: 50px;
+}
+
+#logo {
+	float: left;
+	margin: 20px 0 0 35px;
+}
+a#logo{
+margin: 0;
+
+}
+a:hover {
+margin: 0;
+text-decoration: underline;
+}
+nav {
+	width: 100%;
+	text-align: right;
+}
+nav ul {
+	float: right;
+	line-height: 50px;
+	width: 50%;
+	margin-bottom: 0px;
+	margin: 15px 35px 0 0;
+}
+nav ul li {
+	display: inline;
+	list-style: none;
+	background: none;
+}
+nav ul li a {
+	display: inline;
+	padding-left: 25px;
 
 
-	}
+}
 
 
-/*#signUpButton {
-	border-radius: 25px;
-	border: 1px solid #fff;
-	width: 100px;
-	text-align: center;
-}*/
 
 .centerContent {
 	text-align: center;

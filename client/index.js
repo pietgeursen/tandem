@@ -51,19 +51,37 @@ $(document).ready(function(){
       })
   })
 
-  $("#commentSubmit").click(function(e){
-    e.preventDefault()
+  // 1. pure serverside rendering - nice and simple
+    // take out ajax
+    // res.render hbs
+
+  // 2. initial render serverside
+    // POST Listing/id/comment
+    // GET listing/id data
+    // client side render listing with its comments
+
+  // 3. pure client-side
+
+
+  // its working but is it using form action (html5 forms)?
+  // what's happening with the ajax?
+
+  // server
+  // respond with the comment we just inserted
+
+  $("body").on("click", "#commentSubmit", function(){
     var comment = $('#commentReply').val()
-    var listingID = $('#listingID').val()
-    request
-      .post('/commentOnListing')
-      .send({ comment: comment, listingID: listingID })
-      .end(function(err, res){
-        var data = res.body
-        console.log('res: ', res)
-        $('#appendedComments').append(listingComment({comment: data.comment, listingID: data.listingID}))
-        $('#commentReply').val('')
-      })
+    console.log('Im heerrre')
+    // debugger
+    // request
+    //   .post('/listings/' + listingID + '/comment')
+    //   .send({ comment: comment, listingID: listingID })
+    //   .end(function(err, res){
+    //     var data = res.body
+    //     console.log('res: ', res)
+    //     $('#appendedComments').append(listingComment({comment: data.comment, listingID: data.listingID}))
+    //     $('#commentReply').val('')
+    //   })
   })
   // .get('/singleListing')
   // .end(function(err,res){
@@ -77,7 +95,7 @@ $(document).ready(function(){
     .get('/singleListing?listingID=' + listingID )
     .end(function(err, res){
       var listingIDfromServer = res.body
-      console.log(listingIDfromServer)
+      // console.log(listingIDfromServer)
       $('#newRides').html(singleListing({ data : listingIDfromServer }))
     })
   })

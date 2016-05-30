@@ -114,15 +114,15 @@ app.post('/listings/:id/comment', function(req, res){
   var comment = req.body.comment
   var listingID = req.params.id
   console.log('listingID: ', listingID)
-  knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
-  .then(function(){
-    knex.select('comment').from('comments')
-    // console.log('data (from commentOnListing db insert): ', data)
-  })
-  .then(function(data){
-    console.log('data in second then: ', data)
-    res.send(data)
-  })
+  // knex('comments').insert({comment: req.body.comment, listingID: listingID })
+  // .then(function(){
+  //   // knex.select('*').from('comments').
+  //   // console.log('data (from commentOnListing db insert): ', data)
+  // })
+  // .then(function(data){
+  //   console.log('data in second then: ', data)
+  //   res.send(data)
+  // })
 })
 
 

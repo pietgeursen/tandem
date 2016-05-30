@@ -18,10 +18,10 @@
   <div class="commentContainer">
     <div id="appendedComments"></div>
       <p>{{this.comment}}</p>
-    <form action="/listings/{{this.listingID}}/comment" class="" method="post">
-      <textarea id="commentReply" name="comment" rows="8" cols="40"></textarea>
-      <input type="submit" name="name" value="comment" id="commentSubmit">
-    </form>
+
+      <textarea id="commentReply" rows="8" cols="40"></textarea>
+      <button id="commentSubmit">Comment</button>
+
 
   </div>
 {{/each}}

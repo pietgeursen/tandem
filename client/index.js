@@ -3,6 +3,8 @@ var $ = require('jquery')
 var ridesListing = require('../views/currentListings/_ridesListing.hbs')
 var singleListing = require('../views/singleListing.hbs')
 var listingComment = require('../views/listingComment.hbs')
+var liftConfirm = require('../views/liftConfirm.hbs')
+var liftEnjoy = require('../views/liftEnjoy.hbs')
 
 $(document).ready(function(){
 
@@ -10,12 +12,42 @@ $(document).ready(function(){
     e.preventDefault()
     var origin = $("#origin").val()
     var destination = $("#destination").val()
+    if (origin == null || origin == "") {
+      var message = "Ooops...please enter a start point"
+        document.getElementById("alert").innerHTML = message;
+        return false;
+      }else{
+          request
+            .post('/moreCurrentListings')
+            .send({ origin: origin, destination: destination })
+            .end(function(err, res) {
+              var newListing = res.body
+              $('#newRides').html(ridesListing({ listing: newListing }))
+          })
+      }
+  })
+
+  $('#requestRide').click(function(e) {
+    e.preventDefault()
     request
-      .post('/moreCurrentListings')
-      .send({ origin: origin, destination: destination })
-      .end(function(err, res) {
-        var newListing = res.body
-        $('#newRides').html(ridesListing({ listing: newListing }))
+    .get('/liftConfirm')
+    .send({origin: origin})
+    .end(function(err, res) {
+      var data = res.body
+      $('body').html(liftConfirm({origin: res.body.origin, destination: res.body.destination,
+            date: res.body.departureDate, time: res.body.departureTime, listingID: res.body.listingID}))
+      })
+  })
+
+  $('.rideConfirm').click(function(e) {
+    e.preventDefault()
+    var listingID = e.target.id
+    var description = $('#description').val()
+    request
+      .post('/liftEnjoy')
+      .send({listingID: listingID, description: description })
+      .end(function (err, res) {
+        $('body').html(liftEnjoy())
       })
   })
 
@@ -33,9 +65,9 @@ $(document).ready(function(){
       })
   })
 
+
   $(".seeMore").click(function(e){
     e.preventDefault()
-    console.log("has SeeMore button been clicked")
     var listingID = e.target.id
     request
     .post('/singleListing' )

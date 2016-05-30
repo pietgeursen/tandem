@@ -12,27 +12,41 @@ var dotenv = require('dotenv')
 
 var knexConfig = require('./knexfile')
 var env = process.env.NODE_ENV || 'development'
-var knex = Knex(knexConfig[env]);
+var knex = Knex(knexConfig[env])
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.use(require('cookie-parser')());
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'hbs')
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static("public"))
+app.use(require('cookie-parser')())
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }))
-
 dotenv.load()
 
 app.use(passport.initialize())
 app.use(passport.session())
 
+function validateForm() {
+    var x = document.forms["searchForm"]["origin"].value;
+    if (x == null || x == "") {
+      var message = "Ooops...please enter a start point"
+        document.getElementById("alert").innerHTML = message;
+        return false
+    }
+}
 
 function search(origin, destination){
-  return knex('listings')
-  .where({origin: origin, destination: destination})
-  .innerJoin('users', 'listings.userID', '=', 'users.userID')
+  var searchObject = {origin: origin}
+  if(destination){
+    searchObject.destination = destination
+  }
+  return knex('listings').where(searchObject).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
+
+// function profile(profile){
+//   return knex('users').where('userID', '=', 'users.userID')
+//
+// }
 
 function singleListing(listingID){
   return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
@@ -43,11 +57,9 @@ app.get('/', function(req, res){
 })
 
 app.get('/currentListings', function(req, res){
-  // results of querys in url come into the query object
-  console.log(req.query)
   search(req.query.origin, req.query.destination)
   .then(function(data){
-    res.render('./currentListings/currentListings', {layout: '_layout', listing: data})
+    res.render('./currentListings/currentListings', {layout: '_layout' , listing: data})
   })
 })
 
@@ -60,26 +72,38 @@ app.get('/signin', function (req, res) {
 })
 
 
+//============Create a Listing================
+
 app.get('/createListing', function (req, res) {
   res.render('createListing')
 })
 
-// '2' in knex query will eventually be replaced with something like req.body.listingID..
-app.get('/singleListing', function(req, res){
-  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
-  .then(function(data){
-  console.log('data: ', data)
-    res.render('singleListing',{ data: data })
-    // { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' }
+
+app.post('/createListing', function (req, res) {
+  res.render('createListing')
+  knex('listings').insert(req.body)
+  .then(function (data) {
+    res.render('listingConfirm')
+    console.log("data: ", data)
+      .catch(function(error) {
+        console.log("catch error: ", error)
+      })
   })
 })
 
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
+  .then(function(data){
+    res.render('singleListing',{ data: data })
+  })
+})
+
+
+
+
 //=============== POST Routes ================
 
-
-app.post('/main', function(req, res) { //============working here
-
-console.log(req.body)
+app.post('/main', function(req, res) {
   var originFromMain = req.body.origin
   var destinationFromMain = req.body.destination
   search(originFromMain, destinationFromMain)
@@ -88,9 +112,16 @@ console.log(req.body)
   })
 })
 
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID')
+  .then(function(data){
+    res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
+  })
+})
+
 app.post('/createListing', function (req, res) {
   res.render('createListing')
-  knex('listings').insert(req.body)
+    knex('listings').insert(req.body)
   .then(function (data) {
   })
   .catch(function (error) {
@@ -98,11 +129,9 @@ app.post('/createListing', function (req, res) {
 })
 
 app.post('/singleListing', function(req, res) {
-  console.log('req.body: ', req.body)
   singleListing(req.body.listingID)
   .then(function(data) {
     res.json(data)
-
   })
 })
 
@@ -113,7 +142,32 @@ app.post('/moreCurrentListings', function(req, res) {
   })
 })
 
-app.post('/commentOnListing', function(req, res){
+// app.post('/profile', function(req, res)
+//   profile
+// )
+
+//===================Ride Confirmation====================
+
+app.get('/liftConfirm', function (req, res){
+  knex.select('origin', 'destination', 'departureDate', 'departureTime', 'listingID').from('listings')
+    .then (function(data) {
+      res.json(data[8])
+    })
+})
+
+app.post('/liftEnjoy', function(req, res) {
+  var description = req.body.description
+  var listingID = req.body.listingID
+  knex('ride_requests').insert({listingID: listingID, description: description})
+  knex('listings').where({listingID: listingID}).update({ride_requested: true})
+    .then (function(data){
+      res.json(data)
+    })
+})
+
+//===================Authorisation Code===================
+
+app.post('/singleListing', function(req, res){
   var comment = req.body.comment
   var listingID = req.body.listingID
   knex('comments').insert({comment: req.body.comment, listingID: req.body.listingID })
@@ -122,21 +176,16 @@ app.post('/commentOnListing', function(req, res){
   })
 })
 
-
 //===================Authorisation Code===================
-
 
 app.post('/signup', function (req, res) {
 var hash = bcrypt.hashSync( req.body.password)
  knex('users').insert({ email: req.body.email, hashedPassword: hash })
     .then(function(data){
-        //create sessions
-        // req.session.userId = data[0]
         res.redirect('currentListings')
     })
     .catch(function(error){
        console.log("error:", error)
-        // req.session.userId = 0
         res.redirect('/')
     })
 })
@@ -154,7 +203,7 @@ app.post ('/login', function(req,res) {
     })
 })
 
-//============== OAuth =====================
+// //============== OAuth =====================
 
 app.get('/auth/facebook', passport.authenticate('facebook'))
 
@@ -162,7 +211,6 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function (req, res) {
     console.log('req.user', req.user)
-    // req.session.user = req.user
     res.render('currentListings')
 })
 

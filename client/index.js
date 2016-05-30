@@ -33,9 +33,9 @@ $(document).ready(function(){
     request
     .get('/singleListing?listingID=' + listingID )
     .end(function(err, res){
-      var listingIDfromServer = res.body
-      console.log('listingIDfromServer', listingIDfromServer)
-      $('#newRides').html(singleListing({ data : listingIDfromServer[0], comments: listingIDfromServer })  )
+      var listingUserAndCommentArray = res.body
+      console.log('listingUserAndCommentArray', listingUserAndCommentArray)
+      $('#newRides').html(singleListing({ data : listingUserAndCommentArray[0], comments: listingUserAndCommentArray })  )
     })
   })
 

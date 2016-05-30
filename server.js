@@ -109,8 +109,6 @@ app.get('/singleListing', function(req, res) {
   })
 })
 
-
-
 app.post('/listings/:id/comment', function(req, res){
   var comment = req.body.comment
   var listingID = req.params.id
@@ -123,10 +121,6 @@ app.post('/listings/:id/comment', function(req, res){
       res.send(data)
     })
 })
-
-
-
-
 
 app.post('/moreCurrentListings', function(req, res) {
   search(req.body.origin, req.body.destination)

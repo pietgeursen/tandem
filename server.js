@@ -99,15 +99,7 @@ app.get('/singleListing', function(req, res){
 })
 
 
-// // '2' in knex query will eventually be replaced with something like req.body.listingID..
-// app.get('/singleListing', function(req, res){
-//   knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
-//   .then(function(data){
-//   console.log('data: ', data)
-//     res.render('singleListing',{ data: data })
-//
-//   })
-// })
+
 
 //=============== POST Routes ================
 

@@ -1,223 +1,255 @@
+/* Fonts
+   ========================================================================== */
 @font-face {
-    font-family: Gotham_black;
-    src: url(../fonts/GOTHAM-BLACK.TTF);
-}
+  font-family: Gotham_black;
+  src: url(../fonts/GOTHAM-BLACK.TTF); }
+
 @font-face {
-    font-family: Gotham_medium;
-    src: url(../fonts/GOTHAM-MEDIUM.TTF);
-}
+  font-family: Gotham_medium;
+  src: url(../fonts/GOTHAM-MEDIUM.TTF); }
+
 @font-face {
-    font-family: Gotham_thin;
-    src: url(../fonts/GOTHAM-LIGHT.TTF);
-}
-
-h1, h2, h3, h4, h5, h6 {
-	color: #fff;
-}
-h5 {
-	font-family: Gotham_medium;
-}
-
-h1 {
-	font-family: Gotham_black;
-	font-size: 4em;
-	margin-bottom: 0;
-}
-
-h6 {
-	font-family: Gotham_medium;
-}
-
-/*defaul heading for listing pages*/
-
-
-/*this is a temp rule*/
-button {
-	color: #fff;
-}
-
-body {
-  background: #f9f9f9;
   font-family: Gotham_thin;
-}
+  src: url(../fonts/GOTHAM-LIGHT.TTF); }
 
-.fullBackgroundImage {
-	 background: url(../images/bg002.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-
-  height: 100%
-
-}
-
-#headerBanner {
-	background: #23355b;
-	height: 80px;
-}
-
-
-/* --------------------- Forms ---------------------*/
-.inputFullWidth, #facebookButton {
-	width: 320px;
-	margin: 10px;
-}
+/* Colors
+   ========================================================================== */
+/* INPUTS AND BUTTONS
+   ========================================================================== */
+.inputFullWidth,
 #facebookButton {
-	border-radius: 4px;
-	background: #23355b;
-	height: 38px;
-	margin: 0 auto;
-}
+  width: 350px;
+  margin: 10px; }
 
-#facebookButton a{
-	text-decoration: none;
-	color: #fff;
-	line-height: 38px;
-}
+#facebookButton {
+  border-radius: 4px;
+  background: #23355b;
+  height: 38px;
+  margin: 0 auto; }
 
-#signUpButton {
-	color: #fff;
-	background: #355088;
-	border: none;
-}
+#facebookButton a {
+  text-decoration: none;
+  color: #fff;
+  line-height: 38px; }
 
-#signUpButton:hover {
-	background: #4e69a2;
-}
+.inputFullWidth.sign-up-button {
+  color: #fff;
+  background: #355088;
+  border: none; }
 
-/* --------------------- Signin page ---------------------*/
+.inputFullWidth.sign-up-button:hover {
+  background: #4e69a2; }
 
-.signInContainer {
-	text-align: center;
-	margin-top: 15px;
-}
-
-#signUp {
-	margin-top: 10px;
-	color: #fff;
-} 
-
-
-
-
-/* --------------------- Header ---------------------*/
-
-#logo {
-	font-family: Gotham_black;
-	font-size: 1.5em;
-	line-height: 50px;
-
-	/*text-align: center;*/
-
-}
-
-#logo a {
-	text-decoration: none;
-	color: #fff;
-}
-.main-navigation nav{
-	background: #2f4779;
-}
-/* navigaton mobile */
-
-	nav {
-		width: 100%;
-		text-align: center;
-	}
-	nav ul {
-		line-height: 40px;
-		width: 100%;
-		float: none;
-	}
-	nav ul li {
-		display: block;
-		list-style: none;
-		background: rgba(255,255,255, 0.2);
-		margin-bottom: 1px;
-	}
-	nav ul li a {
-		display: block;
-		text-decoration: none;
-		padding: 5px;
-		color: #fff;
-
-	}
-
-
-/* Larger than tablet */
-@media (min-width: 750px) {
-
-	.signInContainer {
-		margin-top: 50px;
-	}
-
-	#logo {
-		float: left;
-		margin: 20px 0 0 35px;
-	}
-	a#logo{
-	margin: 0;
-
-	}
-	a:hover {
-	margin: 0;
-	text-decoration: underline;
-	}
-	nav {
-		width: 100%;
-		text-align: right;
-	}
-	nav ul {
-		float: right;
-		line-height: 50px;
-		width: 50%;
-		margin-bottom: 0px;
-		margin: 15px 35px 0 0;
-	}
-	nav ul li {
-		display: inline;
-		list-style: none;
-		background: none;
-	}
-	nav ul li a {
-		display: inline;
-		padding-left: 25px;
-	}
-
-}
-
-.centerContent {
-	text-align: center;
-}
 #findButton {
-	border-radius: 25px;
-	border: 1px solid #fff;
-	width: 120px;
-	text-align: center;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	background: #095698;
-	border: none;
+  border-radius: 25px;
+  border: 1px solid #fff;
+  width: 120px;
+  text-align: center;
+  display: block;
+  margin: 20px auto 0;
+  background: #314a80;
+  border: none;
+  color: #fff; }
 
+/* utilities
+   ========================================================================== */
+.center-content {
+  text-align: center; }
 
-/*current Listing*/
+html {
+  -webkit-text-size-adjust: none; }
 
-}
+* {
+  -moz-border-box: box-sizing;
+  -webkit-border-box: box-sizing;
+  border-box: box-sizing; }
 
-.layoutContainer {
-	background: #cccccc;
-	margin-top: 30px;
-	padding: 20px;
-	border-radius: 4px;
-}
-#newRides.listings {
-	text-align: left;
-}
-.listing h3, h4, h5{
-	margin-bottom: 0px;
-}
+nav {
+  background: #23355b;
+  height: 75px;
+  width: 100%; }
 
+header #logo {
+  float: left;
+  font-family: Gotham_black, sans-serif;
+  font-size: 2em;
+  color: #fff; }
 
+header #logo a {
+  text-decoration: none;
+  color: #fff; }
 
+@media only screen and (min-width: 24em) {
+  header, nav, main {
+    width: 100%;
+    margin: auto; }
+  header {
+    padding-bottom: 1em; }
+    header #logo {
+      margin-left: 3%; }
+    header #logo a {
+      line-height: 75px; }
+  nav ul {
+    float: right;
+    width: auto;
+    margin-right: 3%; }
+  nav ul li {
+    float: left;
+    list-style-type: none;
+    line-height: 75px;
+    margin-left: 35px; }
+  nav ul li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    font-family: Gotham_thin, sans-serif;
+    cursor: pointer; }
+  nav ul li a:hover {
+    font-family: Gotham_medium, sans-serif;
+    text-decoration: underline; } }
+
+.nav-button {
+  display: none; }
+
+/* hide the navigation button by default */
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+  /* Navigation Button
+	-------------------------------------------------------- */
+  .nav-button {
+    display: block;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    width: 50px;
+    height: 35px;
+    background: url("../images/menu-icon-large.png"), -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background: url("../images/menu-icon-large.png"), -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background: url("../images/menu-icon-large.png"), -ms-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background: url("../images/menu-icon-large.png"), -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 21px, 100%;
+    cursor: pointer;
+    border: 0 none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.7) inset;
+    border-radius: 5px;
+    z-index: 999;
+    text-indent: -9999px; }
+  .nav-button:hover {
+    background-color: rgba(0, 0, 0, 0.1); }
+  .nav-button.open {
+    background: url("../images/close-icon-large.png"), -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background: url("../images/close-icon-large.png"), -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background: url("../images/close-icon-large.png"), -ms-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background: url("../images/close-icon-large.png"), -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 21px, 100%; }
+  /* Navigation Bar
+	-------------------------------------------------------- */
+  body {
+    padding-top: 50px; }
+  .primary-nav {
+    width: 100%;
+    float: none;
+    background-color: #238be3;
+    /* change the menu color */
+    background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background-image: -ms-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.2));
+    display: block;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 998;
+    clear: both; }
+  .primary-nav li {
+    display: none;
+    width: 100%;
+    font-family: Arial; }
+  .primary-nav li a {
+    display: block;
+    width: 90%;
+    padding: 10px 5%;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.15);
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.1); }
+  .primary-nav li a:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-top-color: transparent; }
+  .primary-nav > li:first-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.2); }
+  /* Toggle the navigation bar open  */
+  .primary-nav.open {
+    height: auto;
+    padding-top: 50px; }
+  .primary-nav.open li {
+    display: block; }
+  /* Submenus optional .parent class indicates dropdowns */
+  .primary-nav > li:hover > a {
+    background: rgba(0, 0, 0, 0.5);
+    border-bottom-color: transparent; }
+  .primary-nav li.parent > a:after {
+    content: "/25BC";
+    color: rgba(255, 255, 255, 0.5);
+    float: right; }
+  .primary-nav li.parent > a:hover {
+    background: rgba(0, 0, 0, 0.75); }
+  .primary-nav li ul {
+    display: none;
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 0 none;
+    padding: 0; }
+  .primary-nav li ul a {
+    border: 0 none;
+    font-size: 12px;
+    padding: 10px 5%;
+    font-weight: normal; }
+  .primary-nav li:hover ul {
+    display: block;
+    border-top: 0 none; } }
+
+/* End Mobile Styles */
+body {
+  font-family: Gotham_thin, sans-serif;
+  background: #2a406d; }
+
+/* Main Landing
+   ========================================================================== */
+.main-landing h1, .main-landing h5, .main-landing h6 {
+  color: #fff; }
+
+.main-landing h1 {
+  font-family: Gotham_black, sans-serif; }
+
+.main-landing h5 {
+  font-family: Gotham_medium, sans-serif; }
+
+/* Sign in
+   ========================================================================== */
+.sign-in h5, .sign-in p {
+  color: #fff;
+  margin-bottom: 5px; }
+
+.sign-in #no-account-footer {
+  margin-top: 10px; }
+
+.sign-in a {
+  text-decoration: none; }
+
+/* Sign up
+   ========================================================================== */
+.sign-in h5, .sign-in p {
+  color: #fff;
+  margin-bottom: 5px; }

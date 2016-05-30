@@ -1,0 +1,51 @@
+@media only screen and (min-width: 24em) {
+
+	header, nav, main {
+		width: 100%;
+		margin: auto;
+	}
+
+	header {
+		padding-bottom: 1em;
+
+		#logo {
+			margin-left: 3%;
+		}
+
+		#logo a {
+			line-height: 75px;
+		}
+	}
+	
+	nav {
+
+		ul {
+			float: right;
+			width: auto;
+			margin-right: 3%;
+		}
+		ul li {
+			float: left;
+			list-style-type: none;
+			line-height: 75px;
+			margin-left: 35px;
+		}
+		
+		ul li a {
+			display: block;
+			color: $menu-text-color;
+			text-decoration: none;
+			font-family: $body;
+			cursor: pointer;
+		}
+		ul li a:hover {
+			font-family: $medium;
+			text-decoration: underline;		
+		}
+
+	} // end of navigation
+
+
+
+
+} //end of desktop view

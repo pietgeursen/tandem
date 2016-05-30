@@ -1,0 +1,50 @@
+@import "variables";
+@import "mobile";
+@import "desktop";
+@import "mobilemenu";
+
+
+body {
+	font-family: $body;
+	background: $secondary-color;
+}
+
+/* Main Landing
+   ========================================================================== */
+.main-landing {
+	h1, h5, h6 {
+		color: $reverse;
+	}
+	h1 {
+		font-family: $bold;
+	}
+	h5 {
+		font-family: $medium;
+	}
+
+}
+
+/* Sign in
+   ========================================================================== */
+.sign-in {
+	h5, p {
+		color: $reverse;
+		margin-bottom: 5px;
+	}
+	#no-account-footer {
+		margin-top: 10px;
+	}
+	a {
+		text-decoration: none;
+	}
+}
+
+/* Sign up
+   ========================================================================== */
+
+.sign-in {
+	h5, p {
+		color: $reverse;
+		margin-bottom: 5px;
+	}
+}

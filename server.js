@@ -64,7 +64,11 @@ app.get('/currentListings', function(req, res){
 })
 
 app.get('/signup', function (req, res) {
-  res.render('login')
+  res.render('register', {layout: '_layout'})
+})
+
+app.get('/signin', function (req, res) {
+  res.render('login', {layout: '_layout'})
 })
 
 
@@ -80,9 +84,10 @@ app.post('/createListing', function (req, res) {
   knex('listings').insert(req.body)
   .then(function (data) {
     res.render('listingConfirm')
-  })
-  .catch(function (error) {
-    console.log("catch error: ", error)
+    console.log("data: ", data)
+      .catch(function(error) {
+        console.log("catch error: ", error)
+      })
   })
 })
 
@@ -92,6 +97,9 @@ app.get('/singleListing', function(req, res){
     res.render('singleListing',{ data: data })
   })
 })
+
+
+
 
 //=============== POST Routes ================
 
@@ -174,13 +182,10 @@ app.post('/signup', function (req, res) {
 var hash = bcrypt.hashSync( req.body.password)
  knex('users').insert({ email: req.body.email, hashedPassword: hash })
     .then(function(data){
-        //create sessions
-        // req.session.userId = data[0]
         res.redirect('currentListings')
     })
     .catch(function(error){
        console.log("error:", error)
-        // req.session.userId = 0
         res.redirect('/')
     })
 })
@@ -206,7 +211,6 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function (req, res) {
     console.log('req.user', req.user)
-    // req.session.user = req.user
     res.render('currentListings')
 })
 

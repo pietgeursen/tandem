@@ -56,6 +56,12 @@
 .center-content {
   text-align: center; }
 
+.bold-text {
+  font-family: Gotham_medium, sans-serif; }
+
+.destination {
+  color: green; }
+
 html {
   -webkit-text-size-adjust: none; }
 
@@ -65,7 +71,7 @@ html {
   border-box: box-sizing; }
 
 nav {
-  background: #23355b;
+  background: rgba(35, 53, 91, 0.7);
   height: 75px;
   width: 100%; }
 
@@ -80,15 +86,31 @@ header #logo a {
   color: #fff; }
 
 @media only screen and (min-width: 24em) {
+  /* Buttons on primary nav
+========================================================================== */
+  .primary-nav a {
+    text-align: center; }
+  .primary-nav a#signup-btn-nav {
+    border: 1px solid #fff;
+    border-radius: 25px;
+    line-height: 0px;
+    margin-top: 20px;
+    padding: 17px;
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease; }
+  .primary-nav a#signup-btn-nav:hover {
+    text-decoration: none;
+    font-family: Gotham_thin, sans-serif;
+    background: #314a80; }
   header, nav, main {
     width: 100%;
     margin: auto; }
-  header {
-    padding-bottom: 1em; }
-    header #logo {
-      margin-left: 3%; }
-    header #logo a {
-      line-height: 75px; }
+  header #logo {
+    margin-left: 3%; }
+  header #logo a {
+    line-height: 75px; }
   nav ul {
     float: right;
     width: auto;
@@ -105,8 +127,7 @@ header #logo a {
     font-family: Gotham_thin, sans-serif;
     cursor: pointer; }
   nav ul li a:hover {
-    font-family: Gotham_medium, sans-serif;
-    text-decoration: underline; } }
+    font-family: Gotham_medium, sans-serif; } }
 
 .nav-button {
   display: none; }
@@ -223,7 +244,8 @@ header #logo a {
 /* End Mobile Styles */
 body {
   font-family: Gotham_thin, sans-serif;
-  background: #2a406d; }
+  background: rgba(35, 53, 91, 0.7);
+  color: #141823; }
 
 /* Main Landing
    ========================================================================== */
@@ -235,6 +257,14 @@ body {
 
 .main-landing h5 {
   font-family: Gotham_medium, sans-serif; }
+
+body {
+  background: url(../images/bg004.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%; }
 
 /* Sign in
    ========================================================================== */
@@ -253,3 +283,35 @@ body {
 .sign-in h5, .sign-in p {
   color: #fff;
   margin-bottom: 5px; }
+
+/* Current Listings
+   ========================================================================== */
+.current-listings-container {
+  background: #f1f1f1;
+  height: 100%; }
+
+#newRides {
+  padding: 4%; }
+  #newRides h4, #newRides h5, #newRides h6, #newRides p {
+    margin-bottom: 0; }
+  #newRides h4 {
+    font-family: Gotham_medium, sans-serif;
+    color: #23355b; }
+
+.listing {
+  background: #f1f1f1;
+  padding: 3%;
+  border-bottom: 1px solid #bdbdbd; }
+  .listing button {
+    background: rgba(35, 53, 91, 0.7);
+    border: none;
+    margin-top: 10px; }
+  .listing a {
+    text-decoration: none;
+    color: #fff; }
+
+/* Single listings
+   ========================================================================== */
+.single-listing-container h5 {
+  margin-top: 20px;
+  font-family: Gotham_medium, sans-serif; }

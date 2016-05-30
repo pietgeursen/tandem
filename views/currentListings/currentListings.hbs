@@ -1,22 +1,10 @@
-<header id="headerBanner">
-  <nav class="navigation">
-    <div id="logo">
-      <a id="logo" href="/">tandem.</a>
-    </div>
-    <ul>
-      <li><a href="#">Create</a></li>
-      <li><a href="/signin">Sign in</a></li>
-      <li><a id="signUpBtnNav" href="/signup">Sign up</a></li>
-    </ul>
-  </nav>
-</header>
+ <div class="current-listings-container">
+  <div class="container u-cf">
 
-<div class="layoutContainer container u-cf">
-  
-    <div class="twelve columns">
+    <div class="search-bar center-content">
       <form class=search id="locations" name="searchForm" onsubmit="return validateForm()">
-        <input type="text" name="origin" id="origin" placeholder="origin">
-        <input type="text" name="destination" id="destination" placeholder="destination">
+        <input class="inputFullWidth" type="text" name="origin" id="origin" placeholder="origin">
+        <input class="inputFullWidth" type="text" name="destination" id="destination" placeholder="destination">
         <button name="searchButton" id="searchButton">Find</button>
         <p id="alert"></p>
       </form>
@@ -28,15 +16,16 @@
 
       <div>
         {{#each listing}}
-          <div class="listing">
-            <h5>{{this.dateTime}} - {{this.time}}</h5>
-            <h4>{{this.origin}} - {{this.destination}}</h4>
-            <p>{{this.name}}</p>
-            <a href="#" id="{{this.listingID}}" class="seeMore">See more</a>
-          </div>
+        <div class="listing">
+          <h6>{{this.dateTime}} - {{this.time}}</h6>
+          <h4>{{this.origin}} - {{this.destination}}</h4>
+          <p>{{this.name}}</p>
+          <button class="listing-button"><a href="#" id="{{this.listingID}}" class="seeMore">See more</a></button>
+        </div>
         {{/each}}
       </div>
     </section>
-<script src="/javascript/formValidation.js"></script>
-<script src="/javascript/bundle.js"></script>
-</div>
+    <script src="/javascript/formValidation.js"></script>
+    <script src="/javascript/bundle.js"></script>
+  </div>
+</div> 

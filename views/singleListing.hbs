@@ -15,19 +15,19 @@
   </div>
 
   <div class="commentContainer">
-    <div id="appendedComments">
-      <div>
-      	<ul>
-      	{{#each comments}}
-      		<li>
-      		  Listing ID: {{this.listingID}}: Comment: {{this.comment}}
-      		</li>
-      	{{/each}}
-      </ul>
-      </div>
-  </div>
       <textarea id="commentReply" rows="8" cols="40"></textarea>
       <button data-listingId={{this.listingID}} id="commentSubmit">Comment</button>
+      <div id="appendedComments">
+        <div>
+        	<ul>
+        	{{#each comments}}
+        		<li>
+        		  Listing ID: {{this.listingID}}: Comment: {{this.comment}}
+        		</li>
+        	{{/each}}
+        </ul>
+        </div>
+    </div>
   </div>
 
 <section id="requestRide">

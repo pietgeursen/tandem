@@ -100,6 +100,7 @@ app.post('/createListing', function (req, res) {
 
 app.get('/singleListing', function(req, res) {
   var listingID = req.query.listingID
+  console.log('listingID: ', listingID)
   displayListingUserCommentData(listingID)
   .then(function(data) {
     // console.log('data from db: ', data)
@@ -113,15 +114,12 @@ app.get('/singleListing', function(req, res) {
 app.post('/listings/:id/comment', function(req, res){
   var comment = req.body.comment
   var listingID = req.params.id
-  // console.log('listingID: ', listingID)
   knex('comments')
     .insert({comment: comment, listingID: listingID })
     .then(function(){
       return knex.select('*').from('comments').where('listingID', listingID)
-    // console.log('data (from commentOnListing db insert): ', data)
     })
     .then(function(data){
-      // console.log('data in second then: ', data)
       res.send(data)
     })
 })

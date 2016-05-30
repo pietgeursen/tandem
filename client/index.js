@@ -27,30 +27,6 @@ $(document).ready(function(){
       }
   })
 
-  $('#requestRide').click(function(e) {
-    e.preventDefault()
-    request
-    .get('/liftConfirm')
-    .send({origin: origin})
-    .end(function(err, res) {
-      var data = res.body
-      $('body').html(liftConfirm({origin: res.body.origin, destination: res.body.destination,
-            date: res.body.departureDate, time: res.body.departureTime, listingID: res.body.listingID}))
-      })
-  })
-
-  $('.rideConfirm').click(function(e) {
-    e.preventDefault()
-    var listingID = e.target.id
-    var description = $('#description').val()
-    request
-      .post('/liftEnjoy')
-      .send({listingID: listingID, description: description })
-      .end(function (err, res) {
-        $('body').html(liftEnjoy())
-      })
-  })
-
   $(".seeMore").click(function(e){
     e.preventDefault()
     var listingID = e.target.id
@@ -58,8 +34,8 @@ $(document).ready(function(){
     .get('/singleListing?listingID=' + listingID )
     .end(function(err, res){
       var listingIDfromServer = res.body
-      // console.log(listingIDfromServer)
-      $('#newRides').html(singleListing({ data : listingIDfromServer }))
+      console.log('listingIDfromServer', listingIDfromServer)
+      $('#newRides').html(singleListing({ data : listingIDfromServer[0], comments: listingIDfromServer })  )
     })
   })
 
@@ -71,7 +47,7 @@ $(document).ready(function(){
       .send({ comment: comment, listingID: listingID })
       .end(function(err, res){
         var data = res.body
-        console.log('data: ', data)
+        // console.log('data: ', data)
         $('#appendedComments').append(listingComment({data: data}))
         $('#commentReply').val('')
       })
@@ -96,5 +72,28 @@ $(document).ready(function(){
 
   // server
   // respond with the comment we just inserted
+  $('#requestRide').click(function(e) {
+    e.preventDefault()
+    request
+    .get('/liftConfirm')
+    .send({origin: origin})
+    .end(function(err, res) {
+      var data = res.body
+      $('body').html(liftConfirm({origin: res.body.origin, destination: res.body.destination,
+            date: res.body.departureDate, time: res.body.departureTime, listingID: res.body.listingID}))
+      })
+  })
+
+  $('.rideConfirm').click(function(e) {
+    e.preventDefault()
+    var listingID = e.target.id
+    var description = $('#description').val()
+    request
+      .post('/liftEnjoy')
+      .send({listingID: listingID, description: description })
+      .end(function (err, res) {
+        $('body').html(liftEnjoy())
+      })
+  })
 
 }) // close doc ready

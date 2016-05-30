@@ -1,38 +1,35 @@
-<div class="singleListing">
-  {{#each data}}
-    <h1 class="singleListHeading">{{this.name}}'s listing</h1>
-    <br>
-    <h4>{{this.origin}} - {{this.destination}}</h4>
-    <p><strong>Driver:</strong> {{this.name}}</p>
+  <div class="singleListing">
 
-    <p><strong>Date: </strong>{{this.dateTime}}{{this.time}}</p>
-    <p>Gender: {{this.gender}}</p>
-    <p>Age: {{this.age}}</p>
-    <p>I've held my driver's licence for {{this.driverLicenceDuration}} years</p>
-    <br><br>
-    <h3>Description.....</h3>
-    <p>{{this.description}}</p>
+      <h1 class="singleListHeading">{{data.name}}'s listing</h1>
+      <br>
+      <h4>{{data.origin}} - {{data.destination}}</h4>
+      <p><strong>Driver:</strong> {{data.name}}</p>
 
-
-
-</div>
-
-
-<div class="commentContainer">
-  <div id="appendedComments"></div>
-    <p>{{this.comment}}</p>
-  <form action="/commentOnListing" class="" method="post">
-    <textarea id="commentReply" name="comment" rows="8" cols="40"></textarea>
-    <input id="listingID" type="hidden" name="listingID" value="{{listingID}}">
-    <input type="submit" name="name" value="comment" id="commentSubmit">
-  </form>
-  {{/each}}
-  <div class="">
-    {{{listingComment}}}
+      <p><strong>Date: </strong>{{data.dateTime}}{{data.time}}</p>
+      <p>Gender: {{data.gender}}</p>
+      <p>Age: {{data.age}}</p>
+      <p>I've held my driver's licence for {{data.driverLicenceDuration}} years</p>
+      <br><br>
+      <h3>Description.....</h3>
+      <p>{{data.description}}</p>
   </div>
-</div>
-<!-- <div class="requestToBook"> -->
+
+  <div class="commentContainer">
+      <textarea id="commentReply" rows="8" cols="40"></textarea>
+      <button data-listingId={{this.listingID}} id="commentSubmit">Comment</button>
+      <div id="appendedComments">
+        <div>
+        	<ul>
+        	{{#each comments}}
+        		<li>
+        		  Listing ID: {{this.listingID}}: Comment: {{this.comment}}
+        		</li>
+        	{{/each}}
+        </ul>
+        </div>
+    </div>
+  </div>
+
 <section id="requestRide">
   <button type="button" id="requestRide" name="requestRide">Request a Ride</button>
-
-</div>
+</section>

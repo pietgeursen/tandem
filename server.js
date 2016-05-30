@@ -43,10 +43,6 @@ function search(origin, destination){
   return knex('listings').where(searchObject).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
-function singleListing(listingID){
-  return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
-}
-
 app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
 })
@@ -65,15 +61,6 @@ app.get('/signup', function (req, res) {
 app.get('/signin', function (req, res) {
   res.render('login', {layout: '_layout'})
 })
-
-
-// unnecessary / unused ==============================
-// app.get('/singleListing', function(req, res){
-//   knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
-//   .then(function(data){
-//     res.render('singleListing',{ data: data })
-//   })
-// })
 
 //============Create a Listing================
 
@@ -113,14 +100,18 @@ app.post('/createListing', function (req, res) {
   })
 })
 
-// defs being used.. question about whether post or get..
 app.get('/singleListing', function(req, res) {
-  console.log('req.query', req.query)
-  singleListing(req.query.listingID)
+  displayListingUserCommentData(req.query.listingID)
   .then(function(data) {
+    console.log('data from db: ', data)
     res.json(data)
   })
 })
+
+function displayListingUserCommentData (listingID){
+  return knex('listings').where({'listings.listingID': listingID}).leftOuterJoin('comments', 'comments.listingID', '=', 'listings.listingID').rightOuterJoin('users', 'users.userID', '=', 'listings.userID')
+  //
+}
 
 app.post('/commentOnListing', function(req, res){
   var comment = req.body.comment

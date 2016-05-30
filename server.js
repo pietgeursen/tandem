@@ -20,11 +20,13 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static("public"))
 app.use(require('cookie-parser')())
-app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }))
-dotenv.load()
-
+app.use(require('express-session')({ secret: 'abandoned  birds', resave: true, saveUninitialized: true }))
 app.use(passport.initialize())
 app.use(passport.session())
+
+dotenv.load()
+
+
 
 function validateForm() {
   var x = document.forms["searchForm"]["origin"].value;
@@ -204,7 +206,7 @@ function (accessToken, refreshToken, profile, callback) {
       }
 
 // //============== set user in session ===================
-
+//Set user in session
 knex('users').insert(user).then(function (resp) {
         callback(null, user)
       })

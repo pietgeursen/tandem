@@ -43,14 +43,10 @@ function search(origin, destination){
   return knex('listings').where(searchObject).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
 
-// function profile(profile){
-//   return knex('users').where('userID', '=', 'users.userID')
-//
-// }
-
 function singleListing(listingID){
   return knex('listings').where({listingID: listingID}).innerJoin('users', 'listings.userID', '=', 'users.userID')
 }
+
 
 app.get('/', function(req, res){
   res.render('main', { layout: '_layout' })
@@ -71,20 +67,21 @@ app.get('/signup', function (req, res) {
 //============Create a Listing================
 
 app.get('/createListing', function (req, res) {
-  res.render('createListing')
+  res.render('createListing', {layout: '_layout'})
 })
 
-
 app.post('/createListing', function (req, res) {
-  res.render('createListing')
+  console.log("boom ....")
   knex('listings').insert(req.body)
   .then(function (data) {
+    console.log("data:", data)
     res.render('listingConfirm')
   })
   .catch(function (error) {
-    console.log("catch error: ", error)
+    console.log("error", error)
   })
 })
+/// ========================================= ///
 
 app.get('/singleListing', function(req, res){
   knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
@@ -110,16 +107,7 @@ app.get('/singleListing', function(req, res){
     res.render('singleListing', { userID: data[0].name, origin: data[0].origin, destination: data[0].destination, date: data[0].dateTime, listingID: data[0].listingID, description: data[0].description, layout: '_layout' })
   })
 })
-
-app.post('/createListing', function (req, res) {
-  res.render('createListing')
-    knex('listings').insert(req.body)
-  .then(function (data) {
-  })
-  .catch(function (error) {
-  })
-})
-
+//=============================================================================
 app.post('/singleListing', function(req, res) {
   singleListing(req.body.listingID)
   .then(function(data) {
@@ -133,10 +121,24 @@ app.post('/moreCurrentListings', function(req, res) {
     res.json(data)
   })
 })
+// ====================================================
+// ====================================================
+// ===============Create a profile=====================
 
-// app.post('/profile', function(req, res)
-//   profile
-// )
+app.get('/profile', function(req, res){
+     knex('users'). where({userID:'1'})
+     .then(function(data){
+    res.render('profile', {layout: '_layout'})
+     })
+})
+
+app.post('/profile', function (req, res) {
+ knex('users').where({userID:'1'})
+
+ . then
+  res.render('profile',{layout: '_layout'})
+
+})
 
 //===================Ride Confirmation====================
 

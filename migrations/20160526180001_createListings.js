@@ -1,4 +1,4 @@
-
+s
 exports.up = function(knex, Promise) {
   console.log('listings table was created!!')
   return knex.schema.createTableIfNotExists('listings', function(table) {

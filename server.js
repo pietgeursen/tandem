@@ -76,7 +76,24 @@ app.get('/createListing', function (req, res) {
   res.render('createListing')
 })
 
+app.post('/createListing', function (req, res) {
+  res.render('createListing')
+  knex('listings').insert(req.body)
+  .then(function (data) {
+    res.render('listingConfirm')
+    console.log("data: ", data)
+      .catch(function(error) {
+        console.log("catch error: ", error)
+      })
+  })
+})
 
+app.get('/singleListing', function(req, res){
+  knex('users').where({'users.userID': 2}).select('*').innerJoin('listings', 'users.userID', 'listings.userID').innerJoin('comments', 'listings.listingID', 'comments.commentID')
+  .then(function(data){
+    res.render('singleListing',{ data: data })
+  })
+})
 
 //=============== POST Routes ================
 

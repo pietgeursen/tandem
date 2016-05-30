@@ -5,6 +5,7 @@ var singleListing = require('../views/singleListing.hbs')
 var listingComment = require('../views/listingComment.hbs')
 var liftConfirm = require('../views/liftConfirm.hbs')
 var liftEnjoy = require('../views/liftEnjoy.hbs')
+var main = require('../views/main.hbs')
 
 $(document).ready(function(){
 
@@ -12,7 +13,6 @@ $(document).ready(function(){
     e.preventDefault()
     var origin = $("#origin").val()
     var destination = $("#destination").val()
-    console.log('hitting this spot')
     if (origin == null || origin == "") {
       var message = "Ooops...please enter a start point"
         document.getElementById("alert").innerHTML = message;
@@ -42,10 +42,8 @@ $(document).ready(function(){
 
   $('.rideConfirm').click(function(e) {
     e.preventDefault()
-    console.log("hitting listener!")
     var listingID = e.target.id
     var description = $('#description').val()
-    console.log("here's the listing ID: ", listingID, "heres description: ", description)
     request
       .post('/liftEnjoy')
       .send({listingID: listingID, description: description })
@@ -55,8 +53,12 @@ $(document).ready(function(){
       })
   })
 
+  $("#newSearch").click(function(e) {
+    e.preventDefault()
+    $('body').html(main)
+  })
+
   $("#commentSubmit").click(function(e){
-    console.log('yea')
     e.preventDefault()
     var comment = $('#commentReply').val()
     var listingID = $('#listingID').val()

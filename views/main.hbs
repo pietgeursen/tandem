@@ -1,15 +1,30 @@
-  <div class="centerContent container u-cf">
-    <div class="twelve columns">
-      <h1>Welcome to Tandem</h1>
-      <h5>Connecting people who need to travel with drivers who have empty seats</h5>
-      <h6>Enter your origin and destination</h6>
-      <form action="/main/" method="post" class=search id="locations" name="searchForm" onsubmit="return validateForm()">
-        <input class="inputFullWidth" type="text" name="origin" id="origin" placeholder="origin">
-        <input class="inputFullWidth" type="text" name="destination" id="destination" placeholder="destination">
-        <button name="findButton" id="findButton">Find</button>
-        <!-- <a href="/currentListing"> -->
-        <p id="alert"></p>
-        </form>
-    </div>
-    <script src="../javascript/formValidation.js"></script>
-  </div> 
+ <div class="fullBackgroundImage">
+	<header>
+			<nav class="navigation">
+				<div id="logo">
+					<a id="logo" href="/">tandem.</a>
+				</div>
+				<ul>
+					<li><a href="#">Create</a></li>
+					<li><a href="/signin">Sign in</a></li>
+					<li><a id="signUpBtnNav" href="/signup">Sign up</a></li>
+				</ul>
+			</nav>
+		</header>
+
+	<div class="centerContent container u-cf">
+		<div class="twelve columns">
+			<h1>Welcome to Tandem</h1>
+			<h5>Connecting people who need to travel with drivers who have empty seats</h5>
+			<h6>Enter your origin and destination</h6>
+			<form action="/main/" method="post" class=search id="locations" name="searchForm" onsubmit="return validateForm()">
+				<input class="inputFullWidth" type="text" name="origin" id="origin" placeholder="origin">
+				<input class="inputFullWidth" type="text" name="destination" id="destination" placeholder="destination">
+				<button name="findButton" id="findButton">Find</button>
+				<!-- <a href="/currentListing"> -->
+				<p id="alert"></p>
+				</form>
+		</div>
+		<script src="../javascript/formValidation.js"></script>
+	</div> 
+ </div> 

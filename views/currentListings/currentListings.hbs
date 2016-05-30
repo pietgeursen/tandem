@@ -1,28 +1,42 @@
-
-<div class="centerContent container u-cf">
-  <div class="twelve columns">
-    <form class=search id="locations" name="searchForm" onsubmit="return validateForm()">
-      <input type="text" name="origin" id="origin" placeholder="origin">
-      <input type="text" name="destiation" id="destination" placeholder="destination">
-      <button name="searchButton" id="searchButton">Find</button>
-      <p id="alert"></p>
-    </form>
-  </div>
-  <section id="newRides">
-    <div class="numberOfRides">
-      <h2>{{numberOfRides}} rides from {{origin}} to {{destination}}</h2>
+<header id="headerBanner">
+  <nav class="navigation">
+    <div id="logo">
+      <a id="logo" href="/">tandem.</a>
     </div>
+    <ul>
+      <li><a href="#">Create</a></li>
+      <li><a href="/signin">Sign in</a></li>
+      <li><a id="signUpBtnNav" href="/signup">Sign up</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <div class="container">
-    {{#each listing}}
-      <div class="listing">
-        <h3>{{this.dateTime}} - {{this.time}}</h3>
-        <h4>{{this.origin}} - {{this.destination}}</h4>
-        <p>{{this.name}}</p>
-        <a href="#" id="{{this.listingID}}" class="seeMore">See more</a>
+<div class="layoutContainer container u-cf">
+  
+    <div class="twelve columns">
+      <form class=search id="locations" name="searchForm" onsubmit="return validateForm()">
+        <input type="text" name="origin" id="origin" placeholder="origin">
+        <input type="text" name="destination" id="destination" placeholder="destination">
+        <button name="searchButton" id="searchButton">Find</button>
+        <p id="alert"></p>
+      </form>
+    </div>
+    <section id="newRides">
+      <div class="numberOfRides">
+        <h4>{{numberOfRides}} rides from {{origin}} to {{destination}}</h4>
       </div>
-    {{/each}}
-  </div>
-</section>
+
+      <div>
+        {{#each listing}}
+          <div class="listing">
+            <h5>{{this.dateTime}} - {{this.time}}</h5>
+            <h4>{{this.origin}} - {{this.destination}}</h4>
+            <p>{{this.name}}</p>
+            <a href="#" id="{{this.listingID}}" class="seeMore">See more</a>
+          </div>
+        {{/each}}
+      </div>
+    </section>
 <script src="/javascript/formValidation.js"></script>
 <script src="/javascript/bundle.js"></script>
+</div>

@@ -40,6 +40,7 @@
     "superagent": "^2.0.0-alpha.3"
   },
   "devDependencies": {
+    "nightwatch": "^0.9.1",
     "watchify": "^3.7.0"
   }
 }
